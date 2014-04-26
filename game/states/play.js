@@ -6,7 +6,7 @@
       this.game.physics.startSystem(Phaser.Physics.ARCADE);
       
       //  Resize our game world to be a 2000 x 800 square
-      this.game.world.setBounds(0, 0, 2000, this.game.height);
+      this.game.world.setBounds(-500, 0, 2000, this.game.height);
 
       //  Our tiled scrolling background
       this.land = this.game.add.tileSprite(0, 0, 800, 600, 'earth');
@@ -20,6 +20,9 @@
       cart.body.velocity.x = this.game.rnd.integerInRange(100,200);
       cart.body.velocity.y = this.game.rnd.integerInRange(0,0);
       cart.anchor.setTo(0.5, 0.5);
+
+      // cart cannot go away from World
+      cart.body.collideWorldBounds = true;
 
       this.game.camera.follow(cart);
       this.game.camera.deadzone = new Phaser.Rectangle(150, 150, 500, 300);
