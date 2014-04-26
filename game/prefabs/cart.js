@@ -7,7 +7,7 @@ var Cart = function(game, x, y, frame) {
 
   game.physics.arcade.enable(this);
 
-  this.body.velocity.x = game.rnd.integerInRange(100,200);
+  this.body.velocity.x = 450;
   this.body.velocity.y = 0;
   this.anchor.setTo(0.5, 0.5);
 
@@ -16,9 +16,11 @@ var Cart = function(game, x, y, frame) {
 
   this.nextMove = 0;
   this.moveRate = 200;
-  this.moveSize = 80;
+  this.moveSize = 50;
 
   this.cursors = game.input.keyboard.createCursorKeys();
+
+  this.currentRail = 0;
 };
 
 Cart.prototype = Object.create(Phaser.Sprite.prototype);

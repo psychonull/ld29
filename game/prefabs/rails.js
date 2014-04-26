@@ -6,13 +6,14 @@ var Rails = function(game) {
 
   // initialize your prefab here
   this.generateRails();
-  this.y = 200;
+  this.y = 270;
 };
 
 Rails.prototype = Object.create(Phaser.Group.prototype);
 Rails.prototype.constructor = Rails;
 
-Rails.RAILS_SEPARATION = 80;
+Rails.RAILS_SEPARATION = 50;
+Rails.RAILS_COUNT = 4;
 
 Rails.prototype.update = function() {
   
@@ -22,7 +23,7 @@ Rails.prototype.update = function() {
 
 Rails.prototype.generateRails = function(){
   var rail;
-  for(var i = 0; i < 4; i++){
+  for(var i = 0; i < Rails.RAILS_COUNT; i++){
     rail = new Rail(this.game);
     rail.y = i * Rails.RAILS_SEPARATION;
     this.add(rail);

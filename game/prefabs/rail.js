@@ -22,6 +22,10 @@ Rail.prototype.generateRail = function(){
   for(var i = 0; i < 100; i++){
     this.add(this.game.add.tileSprite(i * 50, 0, 80, 80, 'env'));
   }
-}
+};
+
+Rail.prototype.getCartY = function(){
+  return this.y + this.parent.y + 50 - 10;
+};
 
 module.exports = Rail;
