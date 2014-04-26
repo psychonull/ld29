@@ -1,56 +1,38 @@
-var Rails = require('../prefabs/rails');
+'use strict';
 
-  'use strict';
-  function Play() {}
-  Play.prototype = {
-    create: function() {
-      this.game.physics.startSystem(Phaser.Physics.ARCADE);
-      
-      //  Resize our game world to be a 2000 x 800 square
-      this.game.world.setBounds(-500, 0, 2000, this.game.height);
+var Cart = require('../prefabs/cart'),
+    Rails = require('../prefabs/rails');
 
-      //  Our tiled scrolling background
-      this.land = this.game.add.tileSprite(0, 0, 800, 600, 'earth');
-      this.land.fixedToCamera = true;
+function Play() {}
 
-      var cart = this.game.add.sprite(0, 200, 'cart');
-      cart.inputEnabled = true;
+Play.prototype = {
+  create: function() {
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    
+    //  Resize our game world to be a 2000 x 800 square
+    this.game.world.setBounds(-500, 0, 2000, this.game.height);
 
-      this.game.physics.arcade.enable(cart);
+    //  Our tiled scrolling background
+    this.land = this.game.add.tileSprite(0, 0, 800, 600, 'earth');
+    this.land.fixedToCamera = true;
 
-      cart.body.velocity.x = this.game.rnd.integerInRange(100,200);
-      cart.body.velocity.y = this.game.rnd.integerInRange(0,0);
-      cart.anchor.setTo(0.5, 0.5);
+    this.cart = new Cart(this.game, 100, this.game.height/2);
+    this.game.add.existing(this.cart);
 
-      // cart cannot go away from World
-      cart.body.collideWorldBounds = true;
+    this.game.camera.follow(this.cart);
+    this.game.camera.deadzone = new Phaser.Rectangle(150, 150, 10, 10);
+    this.game.camera.focusOnXY(0, 0);
 
-      this.game.camera.follow(cart);
-      this.game.camera.deadzone = new Phaser.Rectangle(150, 150, 500, 300);
-      this.game.camera.focusOnXY(0, 0);
+    this.rails = new Rails(this.game);
+    this.game.add.existing(this.rails);
+  },
+  update: function() {
+    this.land.tilePosition.x = -this.game.camera.x;
+    this.land.tilePosition.y = -this.game.camera.y;
+  },
+  clickListener: function() {
+    this.game.state.start('gameover');
+  }
+};
 
-/*
-      this.sprite = this.game.add.sprite(this.game.width/2, this.game.height/2, 'yeoman');
-      this.sprite.inputEnabled = true;
-      
-      this.game.physics.arcade.enable(this.sprite);
-      this.sprite.body.collideWorldBounds = true;
-      this.sprite.body.bounce.setTo(1,1);
-      this.sprite.body.velocity.x = this.game.rnd.integerInRange(-500,500);
-      this.sprite.body.velocity.y = this.game.rnd.integerInRange(-500,500);
-
-      this.sprite.events.onInputDown.add(this.clickListener, this);
-*/
-      this.rails = new Rails(this.game);
-      this.game.add.existing(this.rails);
-    },
-    update: function() {
-      this.land.tilePosition.x = -this.game.camera.x;
-      this.land.tilePosition.y = -this.game.camera.y;
-    },
-    clickListener: function() {
-      this.game.state.start('gameover');
-    }
-  };
-  
-  module.exports = Play;
+module.exports = Play;
