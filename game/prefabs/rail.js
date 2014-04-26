@@ -26,7 +26,7 @@ Rail.prototype.generateRail = function(map){
   else {
     for(var i = 0; i < map.length; i++){
       if(map[i]){
-        this.add(this.game.add.tileSprite(i * 50, 0, 80, 80, 'env'));
+        this.add(this.game.add.image(i * 50, 0, 'env', 'rail'));
         var obstacle = this.game.add.sprite(i * 50, 20, 'cart');
         this.add(obstacle);
       }

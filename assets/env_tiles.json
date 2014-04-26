@@ -1,0 +1,11 @@
+{"frames": [
+
+{
+	"filename": "rail",
+	"frame": {"x":0,"y":0,"w":80,"h":80}
+}
+,{
+	"filename": "floor",
+	"frame": {"x":80,"y":0,"w":80,"h":80}
+}]
+}
