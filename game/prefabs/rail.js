@@ -20,7 +20,7 @@ Rail.prototype.update = function() {
 
 Rail.prototype.generateRail = function(){
   for(var i = 0; i < 100; i++){
-    this.create(i * 160, 0, 'rail');
+    this.add(this.game.add.tileSprite(i * 50, 0, 80, 80, 'env'));
   }
 }
 

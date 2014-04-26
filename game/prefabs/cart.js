@@ -16,7 +16,7 @@ var Cart = function(game, x, y, frame) {
 
   this.nextMove = 0;
   this.moveRate = 200;
-  this.moveSize = 50;
+  this.moveSize = 80;
 
   this.cursors = game.input.keyboard.createCursorKeys();
 };

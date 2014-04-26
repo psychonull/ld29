@@ -15,16 +15,16 @@ Play.prototype = {
     //  Our tiled scrolling background
     this.land = this.game.add.tileSprite(0, 0, 800, 600, 'earth');
     this.land.fixedToCamera = true;
+    
+    this.rails = new Rails(this.game);
+    this.game.add.existing(this.rails);
 
-    this.cart = new Cart(this.game, 100, this.game.height/2);
+    this.cart = new Cart(this.game, 100, this.rails.getLast().y);
     this.game.add.existing(this.cart);
 
     this.game.camera.follow(this.cart);
     this.game.camera.deadzone = new Phaser.Rectangle(150, 150, 10, 10);
     this.game.camera.focusOnXY(0, 0);
-
-    this.rails = new Rails(this.game);
-    this.game.add.existing(this.rails);
   },
   update: function() {
     this.land.tilePosition.x = -this.game.camera.x;
