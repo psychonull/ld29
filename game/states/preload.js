@@ -15,6 +15,7 @@ Preload.prototype = {
     
     this.load.image('earth', 'assets/scorched_earth.png');
     this.load.image('cart', 'assets/cart.png');
+    this.load.image('rail', 'assets/rail.png');
   },
   create: function() {
     this.asset.cropEnabled = false;
