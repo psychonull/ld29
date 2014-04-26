@@ -27,8 +27,20 @@ Play.prototype = {
     this.game.camera.follow(this.cart);
     this.game.camera.deadzone = new Phaser.Rectangle(150, 150, 10, 10);
     this.game.camera.focusOnXY(0, 0);
+
+    // Show FPS
+    this.game.time.advancedTiming = true;
+    this.fpsText = this.game.add.text(
+        20, 20, 'FPS', { font: '12px helvetica', fill: '#ffffff' }
+    );
+    this.fpsText.fixedToCamera = true;
   },
   update: function() {
+    // Show FPS
+    if (this.game.time.fps !== 0) {
+      this.fpsText.setText(this.game.time.fps + ' FPS');
+    }
+
     this.land.tilePosition.x = -this.game.camera.x;
     this.land.tilePosition.y = -this.game.camera.y;
   },
