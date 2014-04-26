@@ -20,6 +20,7 @@ Play.prototype = {
     this.game.add.existing(this.rails);
 
     this.cart = new Cart(this.game, 100, this.rails.getLast().getCartY());
+    this.cart.rails = this.rails;
     this.game.add.existing(this.cart);
 
     this.game.camera.follow(this.cart);

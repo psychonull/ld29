@@ -20,7 +20,7 @@ var Cart = function(game, x, y, frame) {
 
   this.cursors = game.input.keyboard.createCursorKeys();
 
-  this.currentRail = 0;
+  this.currentRail = 3;
 };
 
 Cart.prototype = Object.create(Phaser.Sprite.prototype);
@@ -32,17 +32,25 @@ Cart.prototype.update = function() {
   var hasMove = false;
 
   if (this.cursors.up.isDown && canMove) {
-    this.y -= this.moveSize;
-    hasMove = true;
+    hasMove = this.moveToRail(this.currentRail - 1);
   }
   else if (this.cursors.down.isDown && canMove) {
-    this.y += this.moveSize;
-    hasMove = true;
+    hasMove = this.moveToRail(this.currentRail + 1);
   }
 
   if (hasMove){
     this.nextMove = this.game.time.now + this.moveRate;
   }
+};
+
+Cart.prototype.moveToRail = function(railIndex){
+  var nextRail = this.rails.children[railIndex];
+  if(nextRail){
+    this.y = nextRail.getCartY();
+    this.currentRail = railIndex;
+    return true;
+  }
+  return false;
 };
 
 module.exports = Cart;
