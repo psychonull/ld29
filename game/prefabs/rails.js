@@ -1,11 +1,11 @@
 'use strict';
 var Rail = require('./rail');
 
-var Rails = function(game) {
+var Rails = function(game, map) {
   Phaser.Group.call(this, game);
 
   // initialize your prefab here
-  this.generateRails();
+  this.generateRails(map);
   this.y = 270;
 };
 
@@ -21,12 +21,21 @@ Rails.prototype.update = function() {
   
 };
 
-Rails.prototype.generateRails = function(){
+Rails.prototype.generateRails = function(map){
   var rail;
-  for(var i = 0; i < Rails.RAILS_COUNT; i++){
-    rail = new Rail(this.game);
-    rail.y = i * Rails.RAILS_SEPARATION;
-    this.add(rail);
+  if(!map){
+    for(var i = 0; i < Rails.RAILS_COUNT; i++){
+      rail = new Rail(this.game);
+      rail.y = i * Rails.RAILS_SEPARATION;
+      this.add(rail);
+    }
+  }
+  else {
+    for(var i = 0; i < map.length; i++){
+      rail = new Rail(this.game, map[i]);
+      rail.y = i * Rails.RAILS_SEPARATION;
+      this.add(rail);
+    }
   }
 };
 

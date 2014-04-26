@@ -1,12 +1,11 @@
 'use strict';
 
-var Rail = function(game) {
+var Rail = function(game, map) {
   Phaser.Group.call(this, game);
 
   // initialize your prefab here
-  this.generateRail();
+  this.generateRail(map);
 
-  
 };
 
 Rail.prototype = Object.create(Phaser.Group.prototype);
@@ -18,9 +17,23 @@ Rail.prototype.update = function() {
   
 };
 
-Rail.prototype.generateRail = function(){
-  for(var i = 0; i < 100; i++){
-    this.add(this.game.add.tileSprite(i * 50, 0, 80, 80, 'env'));
+Rail.prototype.generateRail = function(map){
+  if(!map){
+    for(var i = 0; i < 100; i++){
+      this.add(this.game.add.tileSprite(i * 50, 0, 80, 80, 'env'));
+    }
+  }
+  else {
+    for(var i = 0; i < map.length; i++){
+      if(map[i]){
+        this.add(this.game.add.tileSprite(i * 50, 0, 80, 80, 'env'));
+        var obstacle = this.game.add.sprite(i * 50, 20, 'cart');
+        this.add(obstacle);
+      }
+      else {
+        this.add(this.game.add.tileSprite(i * 50, 0, 80, 80, 'env'));
+      }
+    }
   }
 };
 

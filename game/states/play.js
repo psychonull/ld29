@@ -1,7 +1,8 @@
 'use strict';
 
 var Cart = require('../prefabs/cart'),
-    Rails = require('../prefabs/rails');
+    Rails = require('../prefabs/rails'),
+    RailsMapGenerator = require('../utils/railsMapGenerator');
 
 function Play() {}
 
@@ -10,13 +11,13 @@ Play.prototype = {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     
     //  Resize our game world to be a 2000 x 800 square
-    this.game.world.setBounds(-500, 0, 2000, this.game.height);
+    this.game.world.setBounds(0, 0, 2000, this.game.height);
 
     //  Our tiled scrolling background
     this.land = this.game.add.tileSprite(0, 0, 800, 600, 'earth');
     this.land.fixedToCamera = true;
     
-    this.rails = new Rails(this.game);
+    this.rails = new Rails(this.game, RailsMapGenerator.generate());
     this.game.add.existing(this.rails);
 
     this.cart = new Cart(this.game, 100, this.rails.getLast().getCartY());
