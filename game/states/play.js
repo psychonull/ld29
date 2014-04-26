@@ -1,3 +1,4 @@
+var Rails = require('../prefabs/rails');
 
   'use strict';
   function Play() {}
@@ -40,6 +41,8 @@
 
       this.sprite.events.onInputDown.add(this.clickListener, this);
 */
+      this.rails = new Rails(this.game);
+      this.game.add.existing(this.rails);
     },
     update: function() {
       this.land.tilePosition.x = -this.game.camera.x;
