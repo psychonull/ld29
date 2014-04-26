@@ -20,9 +20,7 @@ LayerGame.prototype.update = function() {
 LayerGame.prototype.generateGrass = function(){
   
   for(var i = 0; i < 100; i++){
-    var tile = this.game.add.tileSprite(i * 50, this.grassPos, 80, 80, 'env');
-    tile.tilePosition.y = -160;
-    this.add(tile);
+    this.add(this.game.add.image(i * 50, this.grassPos, 'env', 'grass'));
   }
 
 };

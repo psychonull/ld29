@@ -20,7 +20,7 @@ LayerBack.prototype.update = function() {
 LayerBack.prototype.generateSky = function(){
   
   for(var i = 0; i < 100; i++){
-    this.add(this.game.add.tileSprite(i * 50, this.skyPos, 80, 80, 'envFront'));
+    this.add(this.game.add.image(i * 80, this.skyPos, 'envFront', 'sky'));
   }
 
 };
@@ -28,12 +28,8 @@ LayerBack.prototype.generateSky = function(){
 LayerBack.prototype.generateBg = function(){
   
   for(var i = 0; i < 100; i++){
-    var tileA = this.game.add.tileSprite(i * 50, this.bgPos, 80, 80, 'envFront');
-    var tileB = this.game.add.tileSprite(i * 50, this.bgPos + 80, 80, 80, 'envFront');
-    tileA.tilePosition.y = -320;
-    tileB.tilePosition.y = -320;
-    this.add(tileA);
-    this.add(tileB);
+    this.add(this.game.add.image(i * 80, this.bgPos, 'envFront', 'bg'));
+    this.add(this.game.add.image(i * 80, this.bgPos + 80, 'envFront', 'bg'));
   }
 
 };

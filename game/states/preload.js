@@ -14,8 +14,10 @@ Preload.prototype = {
     this.load.setPreloadSprite(this.asset);
     
     this.load.image('cart', 'assets/cart.png');
-    this.load.image('env', 'assets/env_tiles.png');
-    this.load.image('envFront', 'assets/env_tiles_front.png');
+
+    this.load.atlas('env', 'assets/env_tiles.png', 'assets/env_tiles.json');
+    this.load.atlas('envFront', 'assets/env_tiles_front.png', 'assets/env_tiles_front.json');
+
   },
   create: function() {
     this.asset.cropEnabled = false;

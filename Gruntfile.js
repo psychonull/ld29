@@ -22,6 +22,7 @@ module.exports = function (grunt) {
       scripts: {
         files: [
             'game/**/*.js',
+            'assets/**/*',
             '!game/main.js'
         ],
         options: {

@@ -22,9 +22,7 @@ LayerFront.prototype.update = function() {
 LayerFront.prototype.generateTop = function(){
   
   for(var i = 0; i < 100; i++){
-    var tile = this.game.add.tileSprite(i * 80, this.surfaceTop, 80, 80, 'envFront');
-    tile.tilePosition.y = -80;
-    this.add(tile);
+    this.add(this.game.add.image(i * 80, this.surfaceTop, 'envFront', 'surfaceTop'));
   }
 
 };
@@ -32,9 +30,7 @@ LayerFront.prototype.generateTop = function(){
 LayerFront.prototype.generateBot = function(){
   
   for(var i = 0; i < 100; i++){
-    var tile = this.game.add.tileSprite(i * 80, this.surfaceBot, 80, 80, 'envFront');
-    tile.tilePosition.y = -160;
-    this.add(tile);
+    this.add(this.game.add.image(i * 80, this.surfaceBot, 'envFront', 'surfaceBot'));
   }
 
 };
