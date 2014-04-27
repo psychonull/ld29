@@ -3,11 +3,10 @@ var Rails = require('../prefabs/rails'),
 	Rail = require('../prefabs/rail');
 
 var RailsMapGenerator = {
-	width: 200,
 	height: 4,
 	difficulty: 1,
 
-	generate: function(){
+	generate: function(width){
 		var map = [[],[],[],[]];
 		for (var i = 0; i < map.length; i++){
 			for(var j = 0; j < 200; j++){

@@ -14,22 +14,24 @@ Play.prototype = {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     
     //  Resize our game world to be a 2000 x 800 square
-    this.game.world.setBounds(0, 0, 2000, this.game.height);
-
+    this.game.world.setBounds(0, 0, 20000, this.game.height);
+/*
     this.layerBack = new LayerBack(this.game);
     this.game.add.existing(this.layerBack);
 
     this.layerGame = new LayerGame(this.game);
     this.game.add.existing(this.layerGame);
-
-    this.rails = new Rails(this.game, RailsMapGenerator.generate());
+*/
+    this.rails = new Rails(this.game, RailsMapGenerator.generate(200));
     this.game.add.existing(this.rails);
-
+/*
     this.layerFront = new LayerFront(this.game);
     this.game.add.existing(this.layerFront);
-
-    this.cart = new Cart(this.game, 100, this.rails.getLast().getCartY());
+*/
+    this.cart = new Cart(this.game, 100, 0, this.rails);
     this.cart.rails = this.rails;
+    this.cart.init();
+    
     this.game.add.existing(this.cart);
 
     this.game.camera.follow(this.cart);

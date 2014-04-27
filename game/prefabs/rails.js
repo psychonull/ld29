@@ -3,10 +3,13 @@ var Rail = require('./rail');
 
 var Rails = function(game, map) {
   Phaser.Group.call(this, game);
+  
+  this.map = map;
 
-  // initialize your prefab here
-  this.generateRails(map);
   this.y = 270;
+  
+  this.lastIndex = 0;
+  this.generateRails(map);
 };
 
 Rails.prototype = Object.create(Phaser.Group.prototype);
@@ -17,26 +20,28 @@ Rails.RAILS_COUNT = 4;
 
 Rails.prototype.update = function() {
   
-  // write your prefab's specific update code here
-  
+  if (this.game.camera.x + this.game.width >= this.lastIndex*50) {
+    this.generateRails(this.map);
+  }
+
 };
 
 Rails.prototype.generateRails = function(map){
   var rail;
-  if(!map){
-    for(var i = 0; i < Rails.RAILS_COUNT; i++){
-      rail = new Rail(this.game);
-      rail.y = i * Rails.RAILS_SEPARATION;
-      this.add(rail);
+
+  var to = this.lastIndex + 16;
+  for(var i = 0; i < Rails.RAILS_COUNT; i++){
+    if (this.children[i]){
+      this.children[i].regenerate(map[i], this.lastIndex, i);
     }
-  }
-  else {
-    for(var i = 0; i < map.length; i++){
+    else {
       rail = new Rail(this.game, map[i]);
       rail.y = i * Rails.RAILS_SEPARATION;
       this.add(rail);
     }
   }
+    
+  this.lastIndex = to;
 };
 
 Rails.prototype.getLast = function(){

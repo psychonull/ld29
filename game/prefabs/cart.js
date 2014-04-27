@@ -26,6 +26,10 @@ var Cart = function(game, x, y, frame) {
 Cart.prototype = Object.create(Phaser.Sprite.prototype);
 Cart.prototype.constructor = Cart;
 
+Cart.prototype.init = function(rails){
+  this.moveToRail(this.currentRail);
+}
+
 Cart.prototype.update = function() {
   
   var canMove = this.game.time.now > this.nextMove;
@@ -43,7 +47,7 @@ Cart.prototype.update = function() {
   }
 };
 
-Cart.prototype.moveToRail = function(railIndex){
+Cart.prototype.moveToRail = function(railIndex){  
   var nextRail = this.rails.children[railIndex];
   if(nextRail){
     this.y = nextRail.getCartY();
