@@ -3,7 +3,6 @@
 var LayerBack = function(game) {
   Phaser.Group.call(this, game);
 
-  this.skyPos = 0;
   this.bgPos = 140;
 
   this.generateSky();
@@ -14,9 +13,24 @@ LayerBack.prototype = Object.create(Phaser.Group.prototype);
 LayerBack.prototype.constructor = LayerBack;
 
 LayerBack.prototype.update = function() {
-  
+  this.sky.tilePosition.x = -this.game.camera.x;
+  this.bg.tilePosition.x = -this.game.camera.x;
 };
 
+LayerBack.prototype.generateSky = function(){
+  this.sky = this.game.add.tileSprite(0, 0, 800, 80, 'envBgs');
+  this.sky.fixedToCamera = true;
+  this.add(this.sky);
+};
+
+LayerBack.prototype.generateBg = function(){
+  this.bg = this.game.add.tileSprite(0, this.bgPos, 800, 160, 'envBgs');
+  this.bg.tilePosition.y = -240;
+  this.bg.fixedToCamera = true;
+  this.add(this.bg);
+};
+
+/*
 LayerBack.prototype.generateSky = function(){
   
   for(var i = 0; i < 100; i++){
@@ -33,5 +47,5 @@ LayerBack.prototype.generateBg = function(){
   }
 
 };
-
+*/
 module.exports = LayerBack;
