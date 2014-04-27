@@ -52,8 +52,6 @@ Play.prototype = {
       this.fpsText.setText(this.game.time.fps + ' FPS' + " /// " + this.game.camera.x);
     }
 
-    //this.game.debug.body(this.cart);
-
     this.cart.checkCollisions(this.rails);
   },
   clickListener: function() {

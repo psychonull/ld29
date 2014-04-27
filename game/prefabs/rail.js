@@ -71,21 +71,28 @@ Rail.prototype.getCartY = function(){
 };
 
 Rail.prototype.addObstacle = function(map, i){
-  var obstacleName = 'cart';
+  var rnd = Math.round(Math.random() * 1) + 1;
+  var obstacleName = (rnd === 1 ?  'cart' : 'floor');
   var pool = this.getObstaclePool(obstacleName);
   var obstacle = pool.getFirstDead();
 
   if(obstacle){
     obstacle.revive();
     obstacle.reset(i * 50, 0);
-    obstacle.body.setSize(35, 30, 0, 10);
   }
   else {
-    obstacle = this.game.add.sprite(i * 50, 0, obstacleName);
+    if (obstacleName === "cart"){
+      obstacle = this.game.add.sprite(i * 50, 0, obstacleName);
+    }
+    else {
+      obstacle = this.game.add.sprite(i * 50, 0, 'env', obstacleName); 
+    }
+
+    obstacle.anchor.setTo(0.5, 0);
 
     this.game.physics.enable(obstacle, Phaser.Physics.ARCADE);
     obstacle.body.immovable = true;
-    obstacle.body.setSize(35, 30, 0, 10);
+    obstacle.body.setSize(35, 30, 0, 30);
 
     pool.add(obstacle);
   }
@@ -95,6 +102,8 @@ Rail.prototype.addObstacle = function(map, i){
 Rail.prototype.getObstaclePool = function(obstacleName){
   if(!this.obstaclesPool[obstacleName]){
     this.obstaclesPool[obstacleName] = this.game.add.group();
+    this.obstaclesPool[obstacleName].enableBody = true;
+    this.obstaclesPool[obstacleName].physicsBodyType = Phaser.Physics.ARCADE;
     this.add(this.obstaclesPool[obstacleName]);
   }
   return this.obstaclesPool[obstacleName];

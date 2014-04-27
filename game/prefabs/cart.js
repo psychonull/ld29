@@ -24,6 +24,7 @@ var Cart = function(game, x, y, frame) {
   this.body.setSize(35, 30, 0, 10);
 
   this.currentRail = 3;
+  this.enabled = true;
 };
 
 Cart.prototype = Object.create(Phaser.Sprite.prototype);
@@ -35,7 +36,7 @@ Cart.prototype.init = function(rails){
 
 Cart.prototype.update = function() {
   
-  var canMove = this.game.time.now > this.nextMove;
+  var canMove = this.enabled && (this.game.time.now > this.nextMove);
   var hasMove = false;
 
   if (this.cursors.up.isDown && canMove) {
@@ -61,19 +62,19 @@ Cart.prototype.moveToRail = function(railIndex){
 };
 
 Cart.prototype.checkCollisions = function(railsGroup){
-  this.game.debug.body(this);
+  //this.game.debug.body(this);
 
   var obstacles = railsGroup.getObstacleGroups();
   for(var i = 0; i < obstacles.length; i++){
-    this.game.debug.body(obstacles[i]);
+    //this.game.debug.body(obstacles[i]);
     this.game.physics.arcade.collide(this, obstacles[i], collisionHandler, null, this);
   }
 
   function collisionHandler(cart, obstacle){
     console.log('Loose Money!');
-
-    cart.body.velocity.x = 0;
-    cart.body.velocity.y = 0;
+    this.body.velocity.x = 0;
+    this.body.velocity.y = 0;
+    this.enabled = false;
   }
 }
 

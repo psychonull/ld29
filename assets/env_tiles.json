@@ -4,7 +4,7 @@
   	"frame": {"x":0,"y":0,"w":80,"h":80}
   },{
   	"filename": "floor",
-  	"frame": {"x":0,"y":80,"w":80,"h":80}
+  	"frame": {"x":80,"y":0,"w":80,"h":80}
   },{
     "filename": "grass",
     "frame": {"x":0,"y":160,"w":80,"h":80}
