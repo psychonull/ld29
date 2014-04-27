@@ -7,7 +7,11 @@ var Cart = function(game, x, y, frame) {
 
   game.physics.arcade.enable(this);
 
-  this.body.velocity.x = 400;
+  this.currentVelocity = 450;
+  this.facing = 1;
+  this.jumpOnCollide = 10;
+
+  this.body.velocity.x = this.currentVelocity * this.facing;
   this.body.velocity.y = 0;
   this.anchor.setTo(0.5, 0.5);
 
@@ -24,16 +28,18 @@ var Cart = function(game, x, y, frame) {
   this.body.setSize(35, 30, 0, 10);
 
   this.currentRail = 3;
+
   this.enabled = true;
 
   this.collectedStuff = new Phaser.Signal();
+  this.collided = false;
 };
 
 Cart.prototype = Object.create(Phaser.Sprite.prototype);
 Cart.prototype.constructor = Cart;
 
 Cart.prototype.init = function(rails){
-  this.moveToRail(this.currentRail);
+  this.moveToRail(this.currentRail, true);
 }
 
 Cart.prototype.update = function() {
@@ -51,13 +57,42 @@ Cart.prototype.update = function() {
   if (hasMove){
     this.nextMove = this.game.time.now + this.moveRate;
   }
+
+  if (this.collided){
+    var duration = 100;
+    this.game.add.tween(this).to({angle: 20 * this.facing}, duration, Phaser.Easing.Quadratic.InOut, true, 0, false);
+    this.game.add.tween(this).to({angle: 10 * this.facing * -1}, duration, Phaser.Easing.Quadratic.OutIn, true, duration*2, false);
+    this.game.add.tween(this).to({angle: 0}, duration, Phaser.Easing.Quadratic.OutIn, true, duration*3, false);
+    this.collided = false;
+  }
+
 };
 
-Cart.prototype.moveToRail = function(railIndex){  
+Cart.prototype.moveToRail = function(railIndex, noAminate){  
   var nextRail = this.rails.children[railIndex];
   if(nextRail){
-    this.y = nextRail.getCartY();
-    this.currentRail = railIndex;
+
+    if (noAminate){
+      this.y = nextRail.getCartY();
+      this.currentRail = railIndex;  
+    }
+    else {
+      var nextY = nextRail.getCartY();
+
+      var duration = 100;
+      
+      this.game.add.tween(this)
+        .to({y: nextY}, duration*3, Phaser.Easing.Quadratic.OutIn, true, 0, false)
+        .onComplete.add(function(){
+          this.currentRail = railIndex;
+        }, this);
+
+      this.game.add.tween(this).to({angle: 20 * this.facing * -1}, duration, Phaser.Easing.Quadratic.InOut, true, 0, false);
+      this.game.add.tween(this).to({angle: 20 * this.facing}, duration, Phaser.Easing.Quadratic.OutIn, true, duration*2, false);
+      this.game.add.tween(this).to({angle: 10 * this.facing * -1}, duration, Phaser.Easing.Quadratic.OutIn, true, duration*3, false);
+      this.game.add.tween(this).to({angle: 0}, duration, Phaser.Easing.Quadratic.OutIn, true, duration*4, false);
+    }
+
     return true;
   }
   return false;
@@ -74,16 +109,17 @@ Cart.prototype.checkCollisions = function(railsGroup){
 
   function collisionHandler(cart, obstacle){
     if(obstacle.data.type === 'win'){
-      this.body.velocity.x = -400;
       this.collectedStuff.dispatch(this.game.rnd.integerInRange(10,1000));
+      this.facing *= -1;
       console.log('todo pillo %s', this.body.velocity.x);
     }
     else {
       console.log('Loose %s Money!', obstacle.data.loseFactor);
-      this.body.velocity.x = 0;
-      this.body.velocity.y = 0;
-      this.enabled = false;
+      this.x += this.jumpOnCollide * this.facing;
     }
+    
+    this.body.velocity.x = this.currentVelocity * this.facing;
+    this.collided = true;
   }
 }
 
