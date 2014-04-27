@@ -45,6 +45,9 @@ Play.prototype = {
         20, 20, 'FPS', { font: '12px helvetica', fill: '#ffffff' }
     );
     this.fpsText.fixedToCamera = true;
+
+    this.scoreText = this.game.add.bitmapText(0, 540, 'minecraftia','$ 10.000', 22);
+    this.scoreText.fixedToCamera = true;
   },
   update: function() {
     // Show FPS

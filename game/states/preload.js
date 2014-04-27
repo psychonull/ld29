@@ -18,6 +18,9 @@ Preload.prototype = {
     this.load.atlas('env', 'assets/env_tiles.png', 'assets/env_tiles.json');
     this.load.atlas('envFront', 'assets/env_tiles_front.png', 'assets/env_tiles_front.json');
 
+    this.game.load.bitmapFont('minecraftia', 'assets/fonts/minecraftia.png', 'assets/fonts/minecraftia.xml');
+
+    this.game.load.audio('playSfx', 'assets/sounds/mainMenuPlay.wav');
   },
   create: function() {
     this.asset.cropEnabled = false;
