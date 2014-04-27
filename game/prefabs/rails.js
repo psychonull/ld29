@@ -48,4 +48,16 @@ Rails.prototype.getLast = function(){
   return this.children[this.length - 1];
 };
 
+Rails.prototype.getObstacleGroups = function(){
+  var obstacles = [];
+  for(var i = 0; i < this.children.length; i++){
+    var child = this.children[i];
+    for(var obsName in child.obstaclesPool){
+      obstacles.push(child.obstaclesPool[obsName].children);
+    }
+  } 
+
+  return obstacles;
+};
+
 module.exports = Rails;

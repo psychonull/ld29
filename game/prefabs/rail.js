@@ -16,7 +16,14 @@ Rail.prototype = Object.create(Phaser.Group.prototype);
 Rail.prototype.constructor = Rail;
 
 Rail.prototype.update = function() {
-  
+  /*
+  for(var obsName in this.obstaclesPool){
+    var obstacles = this.obstaclesPool[obsName].children;
+    for(var i = 0; i < obstacles.length; i++){
+      this.game.debug.body(obstacles[i]);
+    }
+  }
+  */
 };
 
 Rail.prototype.generateRail = function(map){
@@ -67,17 +74,22 @@ Rail.prototype.addObstacle = function(map, i){
   var obstacleName = 'cart';
   var pool = this.getObstaclePool(obstacleName);
   var obstacle = pool.getFirstDead();
+
   if(obstacle){
     obstacle.revive();
     obstacle.reset(i * 50, 0);
+    obstacle.body.setSize(35, 30, 0, 10);
   }
   else {
     obstacle = this.game.add.sprite(i * 50, 0, obstacleName);
-    obstacle.checkWorldBounds = true;
-    obstacle.outOfBoundsKill = true;
+
+    this.game.physics.enable(obstacle, Phaser.Physics.ARCADE);
+    obstacle.body.immovable = true;
+    obstacle.body.setSize(35, 30, 0, 10);
+
     pool.add(obstacle);
   }
-  obstacle.bringToTop();
+  
 };
 
 Rail.prototype.getObstaclePool = function(obstacleName){

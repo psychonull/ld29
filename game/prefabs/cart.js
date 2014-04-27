@@ -20,6 +20,9 @@ var Cart = function(game, x, y, frame) {
 
   this.cursors = game.input.keyboard.createCursorKeys();
 
+  this.game.physics.enable(this, Phaser.Physics.ARCADE);
+  this.body.setSize(35, 30, 0, 10);
+
   this.currentRail = 3;
 };
 
@@ -56,5 +59,22 @@ Cart.prototype.moveToRail = function(railIndex){
   }
   return false;
 };
+
+Cart.prototype.checkCollisions = function(railsGroup){
+  this.game.debug.body(this);
+
+  var obstacles = railsGroup.getObstacleGroups();
+  for(var i = 0; i < obstacles.length; i++){
+    this.game.debug.body(obstacles[i]);
+    this.game.physics.arcade.collide(this, obstacles[i], collisionHandler, null, this);
+  }
+
+  function collisionHandler(cart, obstacle){
+    console.log('Loose Money!');
+
+    cart.body.velocity.x = 0;
+    cart.body.velocity.y = 0;
+  }
+}
 
 module.exports = Cart;

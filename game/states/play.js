@@ -11,6 +11,7 @@ function Play() {}
 
 Play.prototype = {
   create: function() {
+
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     
     //  Resize our game world to be a 2000 x 800 square
@@ -50,6 +51,10 @@ Play.prototype = {
     if (this.game.time.fps !== 0) {
       this.fpsText.setText(this.game.time.fps + ' FPS' + " /// " + this.game.camera.x);
     }
+
+    //this.game.debug.body(this.cart);
+
+    this.cart.checkCollisions(this.rails);
   },
   clickListener: function() {
     this.game.state.start('gameover');
