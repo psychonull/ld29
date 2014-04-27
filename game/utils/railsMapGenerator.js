@@ -11,7 +11,6 @@ var RailsMapGenerator = {
 		for (var i = 0; i < map.length; i++){
 			for(var j = 0; j < 200; j++){
 				map[i].push(Math.round(Math.random() * 20) === 17);
-
 			}
 		}
 		return map;
