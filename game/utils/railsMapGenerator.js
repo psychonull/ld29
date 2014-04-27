@@ -10,8 +10,7 @@ var RailsMapGenerator = {
 		var map = [[],[],[],[]];
 		for (var i = 0; i < map.length; i++){
 			for(var j = 0; j < 200; j++){
-				map[i].push(Math.round(Math.random() * 20) === 17);
-
+				map[i].push(Math.round(Math.random() * 10) === 1);
 			}
 		}
 		return map;
