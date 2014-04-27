@@ -7,7 +7,7 @@ var Cart = function(game, x, y, frame) {
 
   game.physics.arcade.enable(this);
 
-  this.body.velocity.x = 450;
+  this.body.velocity.x = 400;
   this.body.velocity.y = 0;
   this.anchor.setTo(0.5, 0.5);
 
@@ -25,6 +25,8 @@ var Cart = function(game, x, y, frame) {
 
   this.currentRail = 3;
   this.enabled = true;
+
+  this.collectedStuff = new Phaser.Signal();
 };
 
 Cart.prototype = Object.create(Phaser.Sprite.prototype);
@@ -72,7 +74,8 @@ Cart.prototype.checkCollisions = function(railsGroup){
 
   function collisionHandler(cart, obstacle){
     if(obstacle.data.type === 'win'){
-      this.body.velocity.x = -450;
+      this.body.velocity.x = -400;
+      this.collectedStuff.dispatch(this.game.rnd.integerInRange(10,1000));
       console.log('todo pillo %s', this.body.velocity.x);
     }
     else {
