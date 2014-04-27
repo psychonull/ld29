@@ -23,7 +23,7 @@ Play.prototype = {
     this.layerGame = new LayerGame(this.game);
     this.game.add.existing(this.layerGame);
 
-    this.rails = new Rails(this.game, RailsMapGenerator.generate(50));
+    this.rails = new Rails(this.game, RailsMapGenerator.generate(100));
     this.game.add.existing(this.rails);
 
     this.layerFront = new LayerFront(this.game);
@@ -31,6 +31,12 @@ Play.prototype = {
 
     this.cart = new Cart(this.game, 100, 0, this.rails);
     this.cart.rails = this.rails;
+    this.cart.collectedStuff.add(function(amt){
+      this.scoreText.setText('Collected ' + amt);
+      this.rails.setFacing(-1);
+      this.game.add.tween(this.game.camera.deadzone).to({x: 500}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
+      //this.game.camera.deadzone = new Phaser.Rectangle(750, 150, 10, 10);
+    }, this);
     this.cart.init();
     
     this.game.add.existing(this.cart);

@@ -2,13 +2,14 @@
 var Rail = require('./rail');
 
 var Rails = function(game, map) {
+  this.map = map;
   Phaser.Group.call(this, game);
   
-  this.map = map;
 
+  this.lastGenerated = 0;
+  this.facing = 1;
   this.y = 270;
   
-  this.lastIndex = 0;
   this.generateRails(map);
 };
 
@@ -19,33 +20,55 @@ Rails.RAILS_SEPARATION = 50;
 Rails.RAILS_COUNT = 4;
 
 Rails.prototype.update = function() {
-  
-  if (this.game.camera.x + this.game.width >= this.lastIndex*50) {
-    this.generateRails(this.map);
+  var OFFSET_GEN = 0;
+  if(typeof this.lastGenerated === 'undefined'){
+    this.lastGenerated = 0;
   }
-
+  var nextCamRails = this.nextCameraViewToRails(this.game.camera.view);
+  if(this.facing === 1){
+    if(this.lastGenerated < nextCamRails.to && this.lastGenerated !== this.map[0].length){
+      if(nextCamRails.to > this.map[0].length){
+        this.generateRails(this.map, this.lastGenerated, this.map[0].length);
+      }
+      else{
+        this.generateRails(this.map, this.lastGenerated,nextCamRails.to + OFFSET_GEN);
+      }
+    }
+  }
+  else if(this.facing === -1){
+    if(this.lastGenerated > nextCamRails.from && this.lastGenerated !== 0){
+      if(nextCamRails.from < 0){
+        this.generateRails(this.map, this.lastGenerated, 0);
+      }
+      else{
+        this.generateRails(this.map, this.lastGenerated, nextCamRails.from - OFFSET_GEN);
+      }
+    }
+  }
 };
 
-Rails.prototype.generateRails = function(map){
-  var rail;
-
-  var to = this.lastIndex + 16;
+Rails.prototype.generateRails = function(map, from, to){
   for(var i = 0; i < Rails.RAILS_COUNT; i++){
     if (this.children[i]){
-      this.children[i].regenerate(map[i], this.lastIndex, i);
+      this.children[i].regenerate2(map[i], this.lastGenerated, to);
     }
     else {
-      rail = new Rail(this.game, map[i]);
+      var rail = new Rail(this.game, map[i]);
       rail.y = i * Rails.RAILS_SEPARATION;
       this.add(rail);
     }
   }
-    
-  this.lastIndex = to;
+  this.lastGenerated = to;
 };
 
 Rails.prototype.getLast = function(){
   return this.children[this.length - 1];
+};
+
+Rails.prototype.setFacing = function(facing){
+  console.log(this.lastIndex);
+  this.lastIndex += 0;
+  this.facing = facing;
 };
 
 Rails.prototype.getObstacleGroups = function(){
@@ -58,6 +81,27 @@ Rails.prototype.getObstacleGroups = function(){
   } 
 
   return obstacles;
+};
+
+Rails.prototype.cameraViewToRails = function(view){
+  var spriteWidth = 50;
+  var starting = view.x / 50;
+  var ending = starting + (view.width / 50);
+  return {
+    from: starting,
+    to: ending
+  };
+};
+
+Rails.prototype.nextCameraViewToRails = function(view){
+  var spriteWidth = 50;
+  var cameraTiles = Math.round(view.width / 50);
+  var starting = Math.round(view.x / 50);
+  var ending = starting + (cameraTiles);
+  return {
+    from: starting + cameraTiles * this.facing,
+    to: ending + cameraTiles * this.facing
+  };
 };
 
 module.exports = Rails;

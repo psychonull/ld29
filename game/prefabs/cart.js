@@ -7,7 +7,7 @@ var Cart = function(game, x, y, frame) {
 
   game.physics.arcade.enable(this);
 
-  this.currentVelocity = 450;
+  this.currentVelocity = 1500;
   this.facing = 1;
   this.jumpOnCollide = 10;
 
