@@ -1,4 +1,5 @@
 'use strict';
+var Obstacle = require('./obstacle');
 
 var Rail = function(game, map) {
   Phaser.Group.call(this, game);
@@ -71,9 +72,8 @@ Rail.prototype.getCartY = function(){
 };
 
 Rail.prototype.addObstacle = function(map, i){
-  var rnd = Math.round(Math.random() * 1) + 1;
-  var obstacleName = (rnd === 1 ?  'cart' : 'floor');
-  var pool = this.getObstaclePool(obstacleName);
+  var obstacleId = map[i];
+  var pool = this.getObstaclePool(obstacleId);
   var obstacle = pool.getFirstDead();
 
   if(obstacle){
@@ -81,13 +81,7 @@ Rail.prototype.addObstacle = function(map, i){
     obstacle.reset(i * 50, 0);
   }
   else {
-    if (obstacleName === "cart"){
-      obstacle = this.game.add.sprite(i * 50, 0, obstacleName);
-    }
-    else {
-      obstacle = this.game.add.sprite(i * 50, 0, 'env', obstacleName); 
-    }
-
+    obstacle = new Obstacle(this.game, i * 50, 0, obstacleId);
     obstacle.anchor.setTo(0.5, 0);
 
     this.game.physics.enable(obstacle, Phaser.Physics.ARCADE);

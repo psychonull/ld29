@@ -71,10 +71,16 @@ Cart.prototype.checkCollisions = function(railsGroup){
   }
 
   function collisionHandler(cart, obstacle){
-    console.log('Loose Money!');
-    this.body.velocity.x = 0;
-    this.body.velocity.y = 0;
-    this.enabled = false;
+    if(obstacle.data.type === 'win'){
+      this.body.velocity.x = -450;
+      console.log('todo pillo %s', this.body.velocity.x);
+    }
+    else {
+      console.log('Loose %s Money!', obstacle.data.loseFactor);
+      this.body.velocity.x = 0;
+      this.body.velocity.y = 0;
+      this.enabled = false;
+    }
   }
 }
 
