@@ -110,8 +110,8 @@ Cart.prototype.checkCollisions = function(railsGroup){
 
   function collisionHandler(cart, obstacle){
     if(obstacle.data.type === 'win'){
-      this.collectedStuff.dispatch(this.game.rnd.integerInRange(10,1000));
       this.facing *= -1;
+      this.collectedStuff.dispatch(this.game.rnd.integerInRange(10,1000));
     }
     else {
       this.collidedObstacle.dispatch(obstacle.data.loseFactor, obstacle);

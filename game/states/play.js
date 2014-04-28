@@ -7,7 +7,8 @@ var Cart = require('../prefabs/cart'),
     LayerFront = require('../prefabs/layers/front'),
     LayerGame = require('../prefabs/layers/game'),
     Hud = require('../prefabs/hud'),
-    Beginning = require('../prefabs/beginning');
+    Beginning = require('../prefabs/beginning'),
+    Ending = require('../prefabs/ending');
 
 function Play() {}
 
@@ -25,7 +26,7 @@ Play.prototype = {
     this.layerGame = new LayerGame(this.game);
     this.game.add.existing(this.layerGame);
 
-    this.rails = new Rails(this.game, RailsMapGenerator.generate(300));
+    this.rails = new Rails(this.game, RailsMapGenerator.generate(100));
     this.game.add.existing(this.rails);
 
     this.layerFront = new LayerFront(this.game);
@@ -33,6 +34,26 @@ Play.prototype = {
 
     this.cart = new Cart(this.game, 300, 0, this.rails);
     this.cart.rails = this.rails;
+    /*
+    this.cart.collectedStuff.add(function(amt){
+      /*this.hud.score(amt);
+      this.rails.setFacing(-1);
+      
+      /
+      this.rails.setFacing(-1);
+
+      this.cart.body.velocity.x = 0;
+      this.cart.currentVelocity = 0;
+      this.hud.startCowntdown(5*1000);
+      this.hud.timer.visible = true;
+      this.hud.timerExpired.add(function(){
+        this.game.add.tween(this.game.camera.deadzone).to({x: 500}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
+        this.cart.currentVelocity = -750;
+        this.cart.body.velocity.x = -750;
+      }, this);
+    }, this);
+*/
+
     this.cart.collectedStuff.add(function(amt){
       this.hud.score(amt);
       this.rails.setFacing(-1);
@@ -50,6 +71,10 @@ Play.prototype = {
     this.beginning = new Beginning(this.game);
     this.game.add.existing(this.beginning);
 
+    this.ending = new Ending(this.game);
+    this.game.add.existing(this.ending);
+    this.ending.x = this.rails.x + this.rails.getEstimatedWidth();
+
     // Show FPS
     this.game.time.advancedTiming = true;
     this.fpsText = this.game.add.text(
@@ -58,10 +83,6 @@ Play.prototype = {
     this.fpsText.fixedToCamera = true;
 
     this.hud = new Hud(this.game);
-    //this.hud.startCowntdown(5*1000);
-    //this.hud.timerExpired.add(function(){
-    //  alert('holy shit');
-    //})
     this.game.add.existing(this.hud);
 
     //  Stop the following keys from propagating up to the browser

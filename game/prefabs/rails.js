@@ -120,4 +120,8 @@ Rails.prototype.nextCameraViewToRails = function(view){
   };
 };
 
+Rails.prototype.getEstimatedWidth = function(){
+  return this.map[0].length * 50;
+};
+
 module.exports = Rails;
