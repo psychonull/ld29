@@ -24,27 +24,32 @@ Rail.prototype.generateRail = function(map){
   this.regenerate2(map, 0, this.max);
 };
 
+Rail.prototype.getSpriteIndex = function(){
+  var idxs = [0,0,3,0,0,3,0,0,3,0,0,0,1,2,3];
+  var idx = Math.round(Math.random() * idxs.length);
+
+  return idxs[idx];
+};
+
 Rail.prototype.doRegenerate = function(map, i){
   
   var rail = this.railsPool.getFirstDead();
 
+  if (rail){
+    rail.revive();
+    rail.reset(i * 50, 0);
+  }
+  else {
+    var rail = this.game.add.sprite(i * 50, 0, 'env', 'rail_' + this.getSpriteIndex());
+    rail.checkWorldBounds = true;
+    rail.outOfBoundsKill = true;
+    rail.anchor.setTo(0.5, 0);
+    this.railsPool.add(rail);        
+  }
+
   if(map[i]){
     this.addObstacle(map, i);
   }
-  else {
-    if (rail){
-      rail.revive();
-      rail.reset(i * 50, 0);
-    }
-    else {
-      var rail = this.game.add.sprite(i * 50, 0, 'env', 'rail');
-      rail.checkWorldBounds = true;
-      rail.outOfBoundsKill = true;
-      rail.anchor.setTo(0.5, 0);
-      this.railsPool.add(rail);        
-    }
-  }
-
 };
 
 Rail.prototype.regenerate2= function(map, from, to){

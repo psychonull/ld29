@@ -74,7 +74,7 @@ Rails.prototype.generateRails = function(map, to){
 
     for(var i = 0; i < Rails.RAILS_COUNT; i++){
       if (this.children[i]){
-        this.children[i].regenerate2(map[i], this.lastGenerated, to, (i === 0?true:false));
+        this.children[i].regenerate2(map[i], this.lastGenerated, to);
       }
       else {
         var rail = new Rail(this.game, map[i]);
