@@ -26,7 +26,7 @@ Menu.prototype = {
     this.sprite.angle = -20;
     this.game.add.tween(this.sprite).to({angle: 20}, 300, Phaser.Easing.Quadratic.InOut, true, 0, 300, true);
 
-    this.game.sound.mute = true;
+    //this.game.sound.mute = true;
     this.audioFx = this.game.add.audio('playSfx');
   },
   update: function() {
@@ -40,7 +40,9 @@ Menu.prototype = {
     var colors = ['#61e1e9','#967750','#584635'],
         timer = this.game.time.create(false),
         eventCount = 0;
+    this.audioFx.volume = 0.5;
     this.audioFx.play();
+    this.game.add.tween(this.audioFx).to({volume: 0}, 400, Phaser.Easing.Linear.In, true, 0, 0, false);
     var execEvent = function(){
       this.game.stage.backgroundColor = this.game.rnd.pick(colors);
       eventCount++;

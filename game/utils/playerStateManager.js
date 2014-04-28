@@ -1,5 +1,7 @@
 'use strict';
 
+var game = Phaser.GAMES[0];
+
 var PlayerStateManager = function(){
   this.gamesPlayed = 0;
 
@@ -25,6 +27,25 @@ PlayerStateManager.prototype = {
       // losses to the worker
       this.addFreedomGold(amt);
     }
+  },
+  getRandomGoldAmountToPick: function(){
+    return this.gamesPlayed * game.rnd.integerInRange(100, 500);
+  },
+  getCartSpeed: function(){
+    var speed = 750;
+    if ( this.gamesPlayed == 1){
+      speed = 400;
+    }
+    else if(this.gamesPlayed > 1 && this.gamesPlayed < 5){
+      speed = 700;
+    }
+    else if(this.gamesPlayed >= 5 && this.gamesPlayed < 7){
+      speed = 900;
+    }
+    else {
+      speed = 900 * (this.gamesPlayed / 6);
+    }
+    return speed;
   }
 };
 

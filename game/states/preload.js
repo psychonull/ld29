@@ -33,6 +33,7 @@ Preload.prototype = {
     this.game.load.bitmapFont('minecraftia_white', 'assets/fonts/minecraftia_white.png', 'assets/fonts/minecraftia_white.xml');
 
     this.game.load.audio('playSfx', 'assets/sounds/mainMenuPlay.wav');
+    this.game.load.audio('bgm', 'assets/sounds/ld29bgm.mp3');
 
     window.formatNumber = function(nbo, zeros){
       function pad (str, max) {

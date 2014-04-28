@@ -47,7 +47,7 @@ Play.prototype = {
       
       this.hud.timerExpired.add(function(){
         this.game.add.tween(this.game.camera.deadzone).to({x: 500}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
-        this.cart.currentVelocity = 750;
+        this.cart.currentVelocity = this.game.playerState.getCartSpeed();
         this.ending.end();
       }, this);
 
@@ -58,8 +58,7 @@ Play.prototype = {
       this.cart.gold = this.hud.score();
     }, this);
 
-    this.cart.currentRail = this.game.playerState.railCartIndex;
-    this.cart.init();
+    this.cart.init(this.game.playerState);
 
     this.cart.collidedStartingPoint.add(function(){
       this.rails.setFacing(1);
@@ -84,8 +83,9 @@ Play.prototype = {
     this.ending.x = this.rails.x + this.rails.getEstimatedWidth();
 
     this.ending.goldClick.add(function(){
-      this.cart.gold += 5; //Gold to sum for each click
-      this.hud.score(5);
+      var goldEarned = this.game.playerState.getRandomGoldAmountToPick();
+      this.cart.gold += goldEarned; //Gold to sum for each click
+      this.hud.score(goldEarned);
     }, this);
 
     // Show FPS
@@ -111,6 +111,10 @@ Play.prototype = {
     };
 
     this.game.stage.backgroundColor = "#000";
+    if(!this.game.bgm){
+      this.game.bgm = this.game.add.audio('bgm');
+      this.game.bgm.play('', 0, 0.7, true);  
+    }
 
   },
   update: function() {
@@ -129,8 +133,8 @@ Play.prototype = {
     this.cartingStarted = true;
     var moveCamTween = this.game.add.tween(this.game.camera).to({x: this.cart.x - 100}, 400, Phaser.Easing.Linear.In, true, 0, 0, false);
     moveCamTween.onComplete.add(function(){
-      this.cart.body.velocity.x = 750;
-      this.cart.currentVelocity = 750;
+      this.cart.body.velocity.x = this.game.playerState.getCartSpeed();
+      this.cart.currentVelocity = this.game.playerState.getCartSpeed();
       this.game.camera.follow(this.cart);
       this.game.camera.deadzone = new Phaser.Rectangle(150, 150, 10, 10);
     }, this);
