@@ -25,6 +25,8 @@ var Ending = function(game) {
   this.collectText.y = 20;
   this.add(this.collectText);
   this.collectText.start();
+  this.coinPickupSound = this.game.add.audio('coinPickup');
+  this.coinPickupSound.volume = 0.3;
 };
 
 Ending.prototype = Object.create(Phaser.Group.prototype);
@@ -34,6 +36,9 @@ Ending.prototype.clickGold = function() {
   if(!this._running){
     return;
   }
+  
+  this.coinPickupSound.play();  
+
   this.goldClick.dispatch();
 
   this.goldEmitter.x = this.game.rnd.integerInRange(120,280);
