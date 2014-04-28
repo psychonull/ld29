@@ -4,7 +4,7 @@ var Ending = function(game) {
   this._running = false;
   Phaser.Group.call(this, game);
 
-  this.add(this.game.add.image(0, 295, 'end', 'floor_right'));
+  this.add(this.game.add.image(-50, 295, 'end', 'floor_right'));
 
   var gold = this.game.add.image(100, 300, 'end', 'gold_pile');
   this.add(gold);
