@@ -55,8 +55,10 @@ Play.prototype = {
     }, this);
 
     this.cart.collidedObstacle.add(function(amt){
-      this.hud.score(amt * this.game.rnd.integerInRange(-50, -5));
+      var lostGold = amt * this.game.rnd.integerInRange(-50, -5);
+      this.hud.score(lostGold);
       this.cart.gold = this.hud.score();
+      this.cart.animateText(lostGold);
     }, this);
 
     this.cart.init(this.game.playerState);

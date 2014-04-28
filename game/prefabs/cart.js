@@ -148,11 +148,11 @@ Cart.prototype.shootParticles = function(type){
 };
 
 Cart.prototype.animateText = function(text){
-  
+
   var x = this.x;
   var y = this.y;
   
-  var txt = this.game.add.bitmapText(x + (100*this.facing), y, 'minecraftia_white', text , 30);
+  var txt = this.game.add.bitmapText(x + (100*this.facing), y, 'minecraftia_white', text.toString() , 30);
   txt.tint = 0xFF0000;
   this.game.add.tween(txt).to({alpha: 0, y: y-100, x: x + (this.facing*this.currentVelocity) }, 750, Phaser.Easing.Quadratic.InOut, true, 0, false);
 };
@@ -162,7 +162,7 @@ Cart.prototype.animateTextGold = function(text){
   var x = this.x;
   var y = this.y-50;
   
-  var txt = this.game.add.bitmapText(x, y, 'minecraftia_white', text , 30);
+  var txt = this.game.add.bitmapText(x, y, 'minecraftia_white', text.toString() , 30);
   txt.tint = 0xf3c907;
   this.game.add.tween(txt).to({alpha: 0, y: y-200 }, 1500, Phaser.Easing.Quadratic.InOut, true, 0, false);
   //this.game.add.tween(txt).to(properties, duration, ease, autoStart, delay, repeat, yoyo);
@@ -191,7 +191,6 @@ Cart.prototype.checkCollisions = function(railsGroup){
 
       this.collidedObstacle.dispatch(obstacle.data.loseFactor, obstacle);
       this.x += this.jumpOnCollide * this.facing;
-      this.animateText("-" + obstacle.data.loseFactor.toString());
     }
     
     this.collided = true;
