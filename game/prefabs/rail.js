@@ -17,39 +17,32 @@ Rail.prototype = Object.create(Phaser.Group.prototype);
 Rail.prototype.constructor = Rail;
 
 Rail.prototype.update = function() {
-  /*
-  for(var obsName in this.obstaclesPool){
-    var obstacles = this.obstaclesPool[obsName].children;
-    for(var i = 0; i < obstacles.length; i++){
-      this.game.debug.body(obstacles[i]);
-    }
-  }
-  */
+
 };
 
 Rail.prototype.generateRail = function(map){
   this.regenerate2(map, 0, this.max);
 };
 
-Rail.prototype.doRegenerate = function(map, i ){
-    
+Rail.prototype.doRegenerate = function(map, i){
+  
   var rail = this.railsPool.getFirstDead();
 
-  if (rail){
-    rail.revive();
-    console.log('HOLY revive');
-    rail.reset(i * 50, 0);
-  }
-  else {
-    var rail = this.game.add.sprite(i * 50, 0, 'env', 'rail');
-    rail.checkWorldBounds = true;
-    rail.outOfBoundsKill = true;
-    console.warn('FKIN REGENERATE');
-    rail.anchor.setTo(0.5, 0);
-    this.railsPool.add(rail);        
-  }
   if(map[i]){
     this.addObstacle(map, i);
+  }
+  else {
+    if (rail){
+      rail.revive();
+      rail.reset(i * 50, 0);
+    }
+    else {
+      var rail = this.game.add.sprite(i * 50, 0, 'env', 'rail');
+      rail.checkWorldBounds = true;
+      rail.outOfBoundsKill = true;
+      rail.anchor.setTo(0.5, 0);
+      this.railsPool.add(rail);        
+    }
   }
 
 };
@@ -61,46 +54,10 @@ Rail.prototype.regenerate2= function(map, from, to){
     }
   }
   else {
-    for(var i = from; i > to; i --){
+    for(var i = from; i >= to; i --){
       this.doRegenerate(map, i);
     }
   }
-};
-
-Rail.prototype.regenerate = function(map, from, facing){
-  if (facing === 1){
-    for(var i = from; i < from + this.max; i ++){
-      this.doRegenerate(map, i);
-    }
-  }
-  else {
-    for(var i = from; i > from - this.max; i--){
-      this.doRegenerate(map, i);
-    }
-  };
-/*
-  for(var i = from; i < from + this.max; i += facing){
-    
-    var rail = this.railsPool.getFirstDead();
-
-    if (rail){
-      rail.revive();
-      //console.log('revive');
-      rail.reset(i * 50, 0);
-    }
-    else {
-      var rail = this.game.add.sprite(i * 50, 0, 'env', 'rail');
-      rail.checkWorldBounds = true;
-      rail.outOfBoundsKill = true;
-      //console.warn('FKIN REGENERATE');
-      this.railsPool.add(rail);        
-    }
-    if(map[i]){
-      this.addObstacle(map, i);
-    }
-
-  }
-*/
 };
 
 Rail.prototype.getCartY = function(){

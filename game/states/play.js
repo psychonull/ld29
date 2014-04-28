@@ -23,7 +23,7 @@ Play.prototype = {
     this.layerGame = new LayerGame(this.game);
     this.game.add.existing(this.layerGame);
 
-    this.rails = new Rails(this.game, RailsMapGenerator.generate(100));
+    this.rails = new Rails(this.game, RailsMapGenerator.generate(900));
     this.game.add.existing(this.rails);
 
     this.layerFront = new LayerFront(this.game);

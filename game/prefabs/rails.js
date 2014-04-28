@@ -10,6 +10,10 @@ var Rails = function(game, map) {
   this.facing = 1;
   this.y = 270;
   
+  this.lastViewX = -1;
+  this.lastPos = { from:-1, to: -1};
+  this.lastGen = { from:-1, to: -1};
+
   this.generateRails(map);
 };
 
@@ -20,45 +24,67 @@ Rails.RAILS_SEPARATION = 50;
 Rails.RAILS_COUNT = 4;
 
 Rails.prototype.update = function() {
-  var OFFSET_GEN = 0;
   if(typeof this.lastGenerated === 'undefined'){
     this.lastGenerated = 0;
   }
-  var nextCamRails = this.nextCameraViewToRails(this.game.camera.view);
-  if(this.facing === 1){
-    if(this.lastGenerated < nextCamRails.to && this.lastGenerated !== this.map[0].length){
-      if(nextCamRails.to > this.map[0].length){
-        this.generateRails(this.map, this.lastGenerated, this.map[0].length);
+
+  if (this.game.camera.view.x !== this.lastViewX){
+    this.lastViewX = this.game.camera.view.x;
+
+    var nextCamRails = this.nextCameraViewToRails(this.game.camera.view);
+    if (nextCamRails.from !== this.lastPos.from || nextCamRails.to !== this.lastPos.to){
+      this.lastPos = {
+        from: nextCamRails.from,
+        to: nextCamRails.to
+      };
+
+      if(this.facing === 1){
+        if(this.lastGenerated < nextCamRails.to && this.lastGenerated !== this.map[0].length){
+          if(nextCamRails.to > this.map[0].length){
+            this.generateRails(this.map, this.map[0].length);
+          }
+          else{
+            this.generateRails(this.map,nextCamRails.to);
+          }
+        }
       }
-      else{
-        this.generateRails(this.map, this.lastGenerated,nextCamRails.to + OFFSET_GEN);
+      else if(this.facing === -1){
+        if(this.lastGenerated > nextCamRails.from && this.lastGenerated >= 0){
+          if(nextCamRails.from < 0){
+            this.generateRails(this.map, 0);
+          }
+          else{
+            this.generateRails(this.map, nextCamRails.from);
+          }
+        }
       }
+
     }
-  }
-  else if(this.facing === -1){
-    if(this.lastGenerated > nextCamRails.from && this.lastGenerated !== 0){
-      if(nextCamRails.from < 0){
-        this.generateRails(this.map, this.lastGenerated, 0);
-      }
-      else{
-        this.generateRails(this.map, this.lastGenerated, nextCamRails.from - OFFSET_GEN);
-      }
-    }
+
   }
 };
 
-Rails.prototype.generateRails = function(map, from, to){
-  for(var i = 0; i < Rails.RAILS_COUNT; i++){
-    if (this.children[i]){
-      this.children[i].regenerate2(map[i], this.lastGenerated, to);
+Rails.prototype.generateRails = function(map, to){
+
+  if (this.lastGenerated !== this.lastGen.from || to !== this.lastGen.to){
+    this.lastGen = {
+      from: this.lastGenerated,
+      to: to
+    };
+
+    for(var i = 0; i < Rails.RAILS_COUNT; i++){
+      if (this.children[i]){
+        this.children[i].regenerate2(map[i], this.lastGenerated, to, (i === 0?true:false));
+      }
+      else {
+        var rail = new Rail(this.game, map[i]);
+        rail.y = i * Rails.RAILS_SEPARATION;
+        this.add(rail);
+      }
     }
-    else {
-      var rail = new Rail(this.game, map[i]);
-      rail.y = i * Rails.RAILS_SEPARATION;
-      this.add(rail);
-    }
+
+    this.lastGenerated = to;
   }
-  this.lastGenerated = to;
 };
 
 Rails.prototype.getLast = function(){
@@ -66,8 +92,6 @@ Rails.prototype.getLast = function(){
 };
 
 Rails.prototype.setFacing = function(facing){
-  console.log(this.lastIndex);
-  this.lastIndex += 0;
   this.facing = facing;
 };
 
@@ -83,21 +107,12 @@ Rails.prototype.getObstacleGroups = function(){
   return obstacles;
 };
 
-Rails.prototype.cameraViewToRails = function(view){
-  var spriteWidth = 50;
-  var starting = view.x / 50;
-  var ending = starting + (view.width / 50);
-  return {
-    from: starting,
-    to: ending
-  };
-};
-
 Rails.prototype.nextCameraViewToRails = function(view){
   var spriteWidth = 50;
   var cameraTiles = Math.round(view.width / 50);
   var starting = Math.round(view.x / 50);
   var ending = starting + (cameraTiles);
+
   return {
     from: starting + cameraTiles * this.facing,
     to: ending + cameraTiles * this.facing
