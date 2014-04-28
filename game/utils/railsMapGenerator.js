@@ -8,19 +8,31 @@ var game = Phaser.GAMES[0];
 var RailsMapGenerator = {
 	height: 4,
 	difficulty: 1,
+	startingOffset: 6,
 
 	generate: function(width){
 		var obstacles = ObstacleTypes.getAvailableIds();
 		var map = [[],[],[],[]];
 		for (var i = 0; i < map.length; i++){
 			map[i].push(ObstacleTypes.START_ID);
+			this.addOffset(map[i]);
 			for(var j = 0; j < width; j++){
 				map[i].push(Math.round(Math.random() * 30) === 2 ? game.rnd.pick(obstacles) : 0);
 			}
 			map[i].push(ObstacleTypes.WIN_ID);
 		}
 		return map;
+	},
+
+	addOffset: function(array){
+		for(var i = 0; i < this.startingOffset; i++){
+			array.push(0);
+		}
 	}
+
+
 };
+
+
 
 module.exports = RailsMapGenerator;
