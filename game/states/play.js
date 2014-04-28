@@ -43,10 +43,12 @@ Play.prototype = {
       this.cart.currentVelocity = 0;
       this.hud.startCowntdown(1*1000);
       this.hud.timer.visible = true;
-
+      this.ending.start();
+      
       this.hud.timerExpired.add(function(){
         this.game.add.tween(this.game.camera.deadzone).to({x: 500}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
         this.cart.currentVelocity = 750;
+        this.ending.end();
       }, this);
 
     }, this);
