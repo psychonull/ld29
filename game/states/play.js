@@ -6,7 +6,8 @@ var Cart = require('../prefabs/cart'),
     LayerBack = require('../prefabs/layers/back'),
     LayerFront = require('../prefabs/layers/front'),
     LayerGame = require('../prefabs/layers/game'),
-    Hud = require('../prefabs/hud');
+    Hud = require('../prefabs/hud'),
+    Beginning = require('../prefabs/beginning');
 
 function Play() {}
 
@@ -24,13 +25,13 @@ Play.prototype = {
     this.layerGame = new LayerGame(this.game);
     this.game.add.existing(this.layerGame);
 
-    this.rails = new Rails(this.game, RailsMapGenerator.generate(900));
+    this.rails = new Rails(this.game, RailsMapGenerator.generate(300));
     this.game.add.existing(this.rails);
 
     this.layerFront = new LayerFront(this.game);
     this.game.add.existing(this.layerFront);
 
-    this.cart = new Cart(this.game, 100, 0, this.rails);
+    this.cart = new Cart(this.game, 300, 0, this.rails);
     this.cart.rails = this.rails;
     this.cart.collectedStuff.add(function(amt){
       this.hud.score(amt);
@@ -44,10 +45,10 @@ Play.prototype = {
     this.cart.init();
     
     this.game.add.existing(this.cart);
-
-    this.game.camera.follow(this.cart);
-    this.game.camera.deadzone = new Phaser.Rectangle(150, 150, 10, 10);
     this.game.camera.focusOnXY(0, 0);
+
+    this.beginning = new Beginning(this.game);
+    this.game.add.existing(this.beginning);
 
     // Show FPS
     this.game.time.advancedTiming = true;
@@ -62,7 +63,16 @@ Play.prototype = {
     //  alert('holy shit');
     //})
     this.game.add.existing(this.hud);
-    
+
+    //  Stop the following keys from propagating up to the browser
+    this.game.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.SPACEBAR ]);
+    var self = this;
+    this.game.input.keyboard.onDownCallback = function(){
+      if(!self.cartingStarted){
+        self.startCarting();
+      }
+    };
+
   },
   update: function() {
     // Show FPS
@@ -72,8 +82,15 @@ Play.prototype = {
 
     this.cart.checkCollisions(this.rails);
   },
-  clickListener: function() {
-    this.game.state.start('gameover');
+  startCarting: function(){
+    this.cartingStarted = true;
+    var moveCamTween = this.game.add.tween(this.game.camera).to({x: this.cart.x - 100}, 400, Phaser.Easing.Linear.In, true, 0, 0, false);
+    moveCamTween.onComplete.add(function(){
+      this.cart.body.velocity.x = 750;
+      this.cart.currentVelocity = 750;
+      this.game.camera.follow(this.cart);
+      this.game.camera.deadzone = new Phaser.Rectangle(150, 150, 10, 10);
+    }, this);
   }
 };
 
