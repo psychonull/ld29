@@ -100,7 +100,6 @@ Play.prototype = {
       }
     };
 
-    this.initPlayerState();
     this.game.stage.backgroundColor = "#000";
   },
   update: function() {
