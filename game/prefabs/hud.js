@@ -22,7 +22,7 @@ var Hud = function(game) {
   this.add(this.minimap);
 
   this.timerExpired = new Phaser.Signal();
-  this.score(100);
+  this.score(0);
 };
 
 Hud.prototype = Object.create(Phaser.Group.prototype);

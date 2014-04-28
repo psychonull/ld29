@@ -8,13 +8,14 @@ var Cart = require('../prefabs/cart'),
     LayerGame = require('../prefabs/layers/game'),
     Hud = require('../prefabs/hud'),
     Beginning = require('../prefabs/beginning'),
-    Ending = require('../prefabs/ending');
+    Ending = require('../prefabs/ending'),
+    PlayerStateManager = require('../utils/playerStateManager');
 
 function Play() {}
 
 Play.prototype = {
   create: function() {
-
+    this.initPlayerState();
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     
     //  Resize our game world to be a 2000 x 800 square
@@ -26,7 +27,7 @@ Play.prototype = {
     this.layerGame = new LayerGame(this.game);
     this.game.add.existing(this.layerGame);
 
-    this.rails = new Rails(this.game, RailsMapGenerator.generate(100));
+    this.rails = new Rails(this.game, RailsMapGenerator.generate(this.game.playerState));
     this.game.add.existing(this.rails);
 
     this.layerFront = new LayerFront(this.game);
@@ -39,7 +40,7 @@ Play.prototype = {
       this.rails.setFacing(-1);
       
       this.cart.currentVelocity = 0;
-      this.hud.startCowntdown(5*1000);
+      this.hud.startCowntdown(1*1000);
       this.hud.timer.visible = true;
 
       this.hud.timerExpired.add(function(){
@@ -54,6 +55,7 @@ Play.prototype = {
       this.cart.gold = this.hud.score();
     }, this);
 
+    this.cart.currentRail = this.game.playerState.railCartIndex;
     this.cart.init();
 
     this.cart.collidedStartingPoint.add(function(){
@@ -61,13 +63,17 @@ Play.prototype = {
       this.game.camera.follow(null);
       this.cart.currentVelocity = 0;
       this.cartingStarted = false;
-      this.cart.gold = 0;
+
+      this.game.state.restart(false);
+      this.game.playerState.railCartIndex = this.cart.currentRail;
+      this.game.playerState.dumpGold(this.hud.score());
+
     }, this);
     
     this.game.add.existing(this.cart);
     this.game.camera.focusOnXY(0, 0);
 
-    this.beginning = new Beginning(this.game);
+    this.beginning = new Beginning(this.game, this.game.playerState);
     this.game.add.existing(this.beginning);
 
     this.ending = new Ending(this.game);
@@ -76,7 +82,7 @@ Play.prototype = {
 
     this.ending.goldClick.add(function(){
       this.cart.gold += 5; //Gold to sum for each click
-      this.hud.score(this.cart.gold);
+      this.hud.score(5);
     }, this);
 
     // Show FPS
@@ -100,24 +106,6 @@ Play.prototype = {
 
     this.game.stage.backgroundColor = "#000";
 
-
-/*
-    //emitter = game.add.emitter(game.world.centerX, game.world.centerY, 250);
-    var goldEmitter = this.game.add.emitter(200, 200, 10);
-    //var add(var goldEmitter);
-
-    goldEmitter.makeParticles('gold', [0,1,2,3], 3, true, true);
-
-    goldEmitter.minParticleSpeed.setTo(-200, -300);
-    goldEmitter.maxParticleSpeed.setTo(200, -400);
-    goldEmitter.minParticleScale = 0.5;
-    goldEmitter.maxParticleScale = 2;
-    goldEmitter.gravity = 150;
-    goldEmitter.bounce.setTo(0.5, 0.5);
-    goldEmitter.angularDrag = 30;
-
-    goldEmitter.start(false, 8000, 400, 50);
-*/
   },
   update: function() {
     // Show FPS
@@ -140,6 +128,12 @@ Play.prototype = {
       this.game.camera.follow(this.cart);
       this.game.camera.deadzone = new Phaser.Rectangle(150, 150, 10, 10);
     }, this);
+  },
+  initPlayerState: function(){
+    if(!this.game.playerState){
+      this.game.playerState = new PlayerStateManager();
+    }
+    this.game.playerState.gamesPlayed++;
   }
 };
 
