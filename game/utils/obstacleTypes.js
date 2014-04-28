@@ -24,7 +24,7 @@ ObstacleTypes = {
 	},
 	"-1" : {
 		res: "env",
-		frame: "floor",
+		frame: "stop_right",
 		type: "win"
 	}
 };

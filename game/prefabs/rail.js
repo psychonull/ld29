@@ -26,9 +26,7 @@ Rail.prototype.generateRail = function(map){
 
 Rail.prototype.getSpriteIndex = function(){
   var idxs = [0,0,3,0,0,3,0,0,3,0,0,0,1,2,3];
-  var idx = Math.round(Math.random() * idxs.length);
-
-  return idxs[idx];
+  return this.game.rnd.pick(idxs);
 };
 
 Rail.prototype.doRegenerate = function(map, i){
