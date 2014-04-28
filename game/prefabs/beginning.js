@@ -25,8 +25,8 @@ var Beginning = function(game, state) {
   sales.scale.y = 0.9;
   this.add(sales);
   
-  this.add(this.game.add.bitmapText(saleX + 62, saleY + 22, 'minecraftia', 'HAPPINESS', 14));
-  this.add(this.game.add.bitmapText(saleX + 82, saleY + 42, 'minecraftia', 'ON SALE', 14));
+  this.add(this.game.add.bitmapText(saleX + 62, saleY + 22, 'minecraftia', 'SALE!!', 14));
+  this.add(this.game.add.bitmapText(saleX + 62, saleY + 42, 'minecraftia', 'freedom tickets', 10));
   this.add(this.game.add.bitmapText(saleX + 62, saleY + 65, 'minecraftia', 
     window.formatNumber(PlayerStateManager.GOLD_REQUIRED_FOR_FREEDOM, 6), 20));
 
