@@ -93,6 +93,9 @@ Play.prototype = {
     this.fpsText.fixedToCamera = true;
 
     this.hud = new Hud(this.game);
+    this.hud.playerLost.add(function(){
+      this.game.state.start('lose');
+    }, this);
     this.game.add.existing(this.hud);
 
     //  Stop the following keys from propagating up to the browser
