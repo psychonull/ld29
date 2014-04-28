@@ -26,6 +26,11 @@ ObstacleTypes = {
 		res: "env",
 		frame: "stop_right",
 		type: "win"
+	},
+	"-2" : {
+		res: "env",
+		frame: "stop_left",
+		type: "start"
 	}
 };
 
@@ -38,5 +43,6 @@ ObstacleTypes.getAvailableIds = function(){
 };
 
 ObstacleTypes.WIN_ID = -1;
+ObstacleTypes.START_ID = -2;
 
 module.exports = ObstacleTypes;

@@ -13,6 +13,7 @@ var RailsMapGenerator = {
 		var obstacles = ObstacleTypes.getAvailableIds();
 		var map = [[],[],[],[]];
 		for (var i = 0; i < map.length; i++){
+			map[i].push(ObstacleTypes.START_ID);
 			for(var j = 0; j < width; j++){
 				map[i].push(Math.round(Math.random() * 30) === 2 ? game.rnd.pick(obstacles) : 0);
 			}

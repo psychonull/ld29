@@ -33,6 +33,7 @@ var Cart = function(game, x, y, frame) {
 
   this.collectedStuff = new Phaser.Signal();
   this.collidedObstacle = new Phaser.Signal();
+  this.collidedStartingPoint = new Phaser.Signal();
   this.collided = false;
 };
 
@@ -112,6 +113,10 @@ Cart.prototype.checkCollisions = function(railsGroup){
     if(obstacle.data.type === 'win'){
       this.facing *= -1;
       this.collectedStuff.dispatch(this.game.rnd.integerInRange(10,1000));
+    }
+    else if(obstacle.data.type === 'start'){
+      this.facing *= -1;
+      this.collidedStartingPoint.dispatch();
     }
     else {
       this.collidedObstacle.dispatch(obstacle.data.loseFactor, obstacle);

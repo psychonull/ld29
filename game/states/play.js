@@ -32,7 +32,7 @@ Play.prototype = {
     this.layerFront = new LayerFront(this.game);
     this.game.add.existing(this.layerFront);
 
-    this.cart = new Cart(this.game, 300, 0, this.rails);
+    this.cart = new Cart(this.game, 400, 0, this.rails);
     this.cart.rails = this.rails;
     /*
     this.cart.collectedStuff.add(function(amt){
@@ -64,6 +64,14 @@ Play.prototype = {
       this.hud.score(amt * this.game.rnd.integerInRange(-50, -5));
     }, this);
     this.cart.init();
+
+    this.cart.collidedStartingPoint.add(function(){
+      this.rails.setFacing(1);
+      this.game.camera.follow(null);
+      this.cart.body.velocity.x = 0;
+      this.cart.currentVelocity = 0;
+      this.cartingStarted = false;
+    }, this);
     
     this.game.add.existing(this.cart);
     this.game.camera.focusOnXY(0, 0);
