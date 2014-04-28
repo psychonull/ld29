@@ -32,6 +32,7 @@ var Cart = function(game, x, y, frame) {
   this.enabled = true;
 
   this.collectedStuff = new Phaser.Signal();
+  this.collidedObstacle = new Phaser.Signal();
   this.collided = false;
 };
 
@@ -114,6 +115,7 @@ Cart.prototype.checkCollisions = function(railsGroup){
     }
     else {
       console.log('Loose %s Money!', obstacle.data.loseFactor);
+      this.collidedObstacle.dispatch(obstacle.data.loseFactor, obstacle);
       this.x += this.jumpOnCollide * this.facing;
     }
     
