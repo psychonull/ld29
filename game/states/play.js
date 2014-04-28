@@ -46,7 +46,10 @@ Play.prototype = {
       this.hud.timerExpired.add(function(){
         this.game.add.tween(this.game.camera.deadzone).to({x: 500}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
         this.cart.currentVelocity = 750;
+
+        this.cart.gold = 1;
       }, this);
+
     }, this);
 
     this.cart.collidedObstacle.add(function(amt){
@@ -60,6 +63,8 @@ Play.prototype = {
       this.game.camera.follow(null);
       this.cart.currentVelocity = 0;
       this.cartingStarted = false;
+
+      this.cart.gold = 0;
     }, this);
     
     this.game.add.existing(this.cart);

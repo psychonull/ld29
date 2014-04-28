@@ -1,0 +1,9 @@
+{
+  "frames": [{
+    "filename": "floor_right",
+    "frame": {"x":0,"y":0,"w":700,"h":200}
+  },{
+    "filename": "floor_left",
+    "frame": {"x":600,"y":0,"w":424,"h":200}
+  }]
+}

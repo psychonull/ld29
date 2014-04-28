@@ -37,6 +37,12 @@ var Cart = function(game, x, y, frame) {
   this.collidedObstacle = new Phaser.Signal();
   this.collidedStartingPoint = new Phaser.Signal();
   this.collided = false;
+
+  this.gold = 0;
+
+  this.animations.add('empty', [0,1,2,3,4], true);
+  this.animations.add('filled', [5,6,7,8,9]);
+  this.animations.play('empty'); 
 };
 
 Cart.prototype = Object.create(Phaser.Sprite.prototype);
@@ -71,6 +77,12 @@ Cart.prototype.update = function() {
     this.collided = false;
   }
 
+  if (this.body.velocity.x === 0){
+    this.animations.stop();
+  }
+  else {
+    this.animations.play(this.gold > 0 ? 'filled' : 'empty', 12, true); 
+  }
 };
 
 Cart.VELOCITY_REDUCTION_ON_RAIL_MOVEMENT = 0.9;

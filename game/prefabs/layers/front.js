@@ -6,7 +6,7 @@ var LayerFront = function(game) {
   this.surfaceTop = 100;
   this.surfaceBot = 490;
 
-  this.add(this.game.add.image(0, 298, 'start', 'floor'));
+  this.add(this.game.add.image(-42, 295, 'end', 'floor_left'));
 
   this.generateTop();
   this.generateBot();
@@ -25,12 +25,6 @@ LayerFront.prototype.generateTop = function(){
   this.top.tilePosition.y = -160;
   this.top.fixedToCamera = true;
   this.add(this.top);
-
-  /*
-  for(var i = 0; i < 100; i++){
-    this.add(this.game.add.image(i * 80, this.surfaceTop, 'envFront', 'surfaceTop'));
-  }
-  */
 };
 
 LayerFront.prototype.generateBot = function(){
@@ -38,12 +32,6 @@ LayerFront.prototype.generateBot = function(){
   this.bot.tilePosition.y = -400;
   this.bot.fixedToCamera = true;
   this.add(this.bot);
-
-  /*
-  for(var i = 0; i < 100; i++){
-    this.add(this.game.add.image(i * 80, this.surfaceBot, 'envFront', 'surfaceBot'));
-  }
-  */
 };
 
 
