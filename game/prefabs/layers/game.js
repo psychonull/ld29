@@ -21,7 +21,7 @@ LayerGame.prototype.generateGrass = function(){
   this.grass.fixedToCamera = true;
   this.add(this.grass);
 
-  this.add(this.game.add.image(100, 40, 'start', 'hole'));
+  this.add(this.game.add.image(30, 40, 'start', 'hole'));
 };
 
 module.exports = LayerGame;
