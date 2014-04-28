@@ -50,7 +50,8 @@ var Cart = function(game, x, y, frame) {
 Cart.prototype = Object.create(Phaser.Sprite.prototype);
 Cart.prototype.constructor = Cart;
 
-Cart.prototype.init = function(rails){
+Cart.prototype.init = function(state){
+  this.currentRail = state.railCartIndex;
   this.moveToRail(this.currentRail, true);
 }
 
