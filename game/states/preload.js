@@ -7,8 +7,15 @@ function Preload() {
 
 Preload.prototype = {
   preload: function() {
-    this.asset = this.add.sprite(this.width/2,this.height/2, 'preloader');
+    this.asset = this.add.sprite(this.game.width/2,this.game.height/2, 'preloader');
     this.asset.anchor.setTo(0.5, 0.5);
+
+    this.text = this.game.add.text(325,this.game.height/2 + 70, "LOADING...");
+    this.text.font = 'Arial';
+    this.text.fontWeight = 'bold';
+    this.text.fontSize = 30;
+    this.text.fill = '#ffffff';
+
 
     this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
     this.load.setPreloadSprite(this.asset);
