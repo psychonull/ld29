@@ -23,6 +23,8 @@ var Cart = function(game, x, y, frame) {
   this.moveSize = 50;
 
   this.cursors = game.input.keyboard.createCursorKeys();
+  this.wKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
+  this.sKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
 
   this.game.physics.enable(this, Phaser.Physics.ARCADE);
   this.body.setSize(35, 30, 0, 10);
@@ -49,10 +51,10 @@ Cart.prototype.update = function() {
   var canMove = this.enabled && (this.game.time.now > this.nextMove);
   var hasMove = false;
 
-  if (this.cursors.up.isDown && canMove) {
+  if ((this.cursors.up.isDown || this.wKey.isDown) && canMove) {
     hasMove = this.moveToRail(this.currentRail - 1);
   }
-  else if (this.cursors.down.isDown && canMove) {
+  else if ((this.cursors.down.isDown || this.sKey.isDown) && canMove) {
     hasMove = this.moveToRail(this.currentRail + 1);
   }
 
