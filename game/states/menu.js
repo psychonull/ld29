@@ -13,12 +13,12 @@ Menu.prototype = {
     this.sprite.anchor.setTo(0.5, 0.5);
 
 
-    this.scoreText = this.game.add.bitmapText(0, 300, 'minecraftia','PLAY', 42);
+    this.scoreText = this.game.add.bitmapText(0, 300, 'minecraftia_white','PLAY', 46);
     this.scoreText.align = 'center';
     this.scoreText.x = this.game.width / 2 - this.scoreText.textWidth / 2;
     this.scoreText.y = this.game.height / 2 - this.scoreText.textHeight / 2;
     
-    this.instructionsText = this.game.add.bitmapText(270, 365, 'minecraftia', 'Use Up/Down Arrows to move', 16);
+    this.instructionsText = this.game.add.bitmapText(270, 365, 'minecraftia', 'Click to begin. Use Up/Down Arrows to move', 16);
     this.instructionsText.x = this.game.width / 2 - this.instructionsText.textWidth / 2;
 
     this.sprite.angle = -20;

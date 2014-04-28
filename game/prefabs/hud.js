@@ -7,7 +7,7 @@ var Hud = function(game) {
   this.y = 535;
   this.fixedToCamera = true;
 
-  this.scoreText = this.game.add.bitmapText(0, 0, 'minecraftia','$ 10.000', 22);
+  this.scoreText = this.game.add.bitmapText(0, 0, 'minecraftia_gold','$ 10.000', 30);
   this.add(this.scoreText);
 
   this.timer = this.game.add.bitmapText(0, 0, 'minecraftia','30.00', 22);
