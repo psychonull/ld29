@@ -3,7 +3,7 @@
 var LayerFront = function(game) {
   Phaser.Group.call(this, game);
   
-  this.surfaceTop = 110;
+  this.surfaceTop = 100;
   this.surfaceBot = 490;
 
   this.generateTop();
