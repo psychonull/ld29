@@ -46,7 +46,8 @@ Play.prototype = {
       this.ending.start();
       
       this.hud.timerExpired.add(function(){
-        this.game.add.tween(this.game.camera.deadzone).to({x: 500}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
+        // If blow up, put back .to({x: 500}
+        this.game.add.tween(this.game.camera.deadzone).to({x: 750}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
         this.cart.currentVelocity = 750;
         this.ending.end();
       }, this);
@@ -85,6 +86,7 @@ Play.prototype = {
 
     this.ending.goldClick.add(function(){
       this.cart.gold += 5; //Gold to sum for each click
+      this.cart.animateTextGold("+" + 5);
       this.hud.score(5);
     }, this);
 
