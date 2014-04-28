@@ -102,6 +102,7 @@ Play.prototype = {
       }
     };
 
+    this.game.stage.backgroundColor = "#000";
   },
   update: function() {
     // Show FPS

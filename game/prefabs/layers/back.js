@@ -7,6 +7,7 @@ var LayerBack = function(game) {
 
   this.generateSky();
   this.generateBg();
+  this.createStart();
 };
 
 LayerBack.prototype = Object.create(Phaser.Group.prototype);
@@ -30,22 +31,17 @@ LayerBack.prototype.generateBg = function(){
   this.add(this.bg);
 };
 
-/*
-LayerBack.prototype.generateSky = function(){
-  
-  for(var i = 0; i < 100; i++){
-    this.add(this.game.add.image(i * 80, this.skyPos, 'envFront', 'sky'));
-  }
+LayerBack.prototype.createStart = function(){
+  this.add(this.game.add.image(100, this.bgPos, 'start', 'stair'));
+  this.add(this.game.add.image(100, this.bgPos + 80, 'start', 'stair'));
 
+  this.add(this.game.add.image(80, this.bgPos, 'start', 'light'));
+
+  /*
+  var tile = this.game.add.image(80, this.bgPos, 'start', 'light');
+  this.add(tile);
+  tile.bringToTop();
+  */
 };
 
-LayerBack.prototype.generateBg = function(){
-  
-  for(var i = 0; i < 100; i++){
-    this.add(this.game.add.image(i * 80, this.bgPos, 'envFront', 'bg'));
-    this.add(this.game.add.image(i * 80, this.bgPos + 80, 'envFront', 'bg'));
-  }
-
-};
-*/
 module.exports = LayerBack;
