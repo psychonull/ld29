@@ -34,41 +34,30 @@ Play.prototype = {
 
     this.cart = new Cart(this.game, 400, 0, this.rails);
     this.cart.rails = this.rails;
-    /*
-    this.cart.collectedStuff.add(function(amt){
-      /*this.hud.score(amt);
-      this.rails.setFacing(-1);
-      
-      /
-      this.rails.setFacing(-1);
-
-      this.cart.body.velocity.x = 0;
-      this.cart.currentVelocity = 0;
-      this.hud.startCowntdown(5*1000);
-      this.hud.timer.visible = true;
-      this.hud.timerExpired.add(function(){
-        this.game.add.tween(this.game.camera.deadzone).to({x: 500}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
-        this.cart.currentVelocity = -750;
-        this.cart.body.velocity.x = -750;
-      }, this);
-    }, this);
-*/
 
     this.cart.collectedStuff.add(function(amt){
       this.hud.score(amt);
       this.rails.setFacing(-1);
-      this.game.add.tween(this.game.camera.deadzone).to({x: 500}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
+      
+      this.cart.currentVelocity = 0;
+      this.hud.startCowntdown(5*1000);
+      this.hud.timer.visible = true;
+
+      this.hud.timerExpired.add(function(){
+        this.game.add.tween(this.game.camera.deadzone).to({x: 500}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
+        this.cart.currentVelocity = 750;
+      }, this);
     }, this);
 
     this.cart.collidedObstacle.add(function(amt){
       this.hud.score(amt * this.game.rnd.integerInRange(-50, -5));
     }, this);
+
     this.cart.init();
 
     this.cart.collidedStartingPoint.add(function(){
       this.rails.setFacing(1);
       this.game.camera.follow(null);
-      this.cart.body.velocity.x = 0;
       this.cart.currentVelocity = 0;
       this.cartingStarted = false;
     }, this);
