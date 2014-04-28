@@ -35,7 +35,7 @@ LayerBack.prototype.createStart = function(){
   this.add(this.game.add.image(30, this.bgPos, 'start', 'stair'));
   this.add(this.game.add.image(30, this.bgPos + 80, 'start', 'stair'));
 
-  this.add(this.game.add.image(10, this.bgPos, 'start', 'light'));
+  this.add(this.game.add.image(15, this.bgPos, 'start', 'light'));
 };
 
 module.exports = LayerBack;

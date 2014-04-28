@@ -13,7 +13,7 @@ var Beginning = function(game, state) {
   txt2.tint = 0x756632;
   this.add(txt2);
 
-  this.surplusGoldText = this.game.add.bitmapText(60, 420, 'minecraftia_white', state.surplusGold + '.00', 20);
+  this.surplusGoldText = this.game.add.bitmapText(60, 420, 'minecraftia_white', window.formatNumber(state.surplusGold, 8), 20);
   this.surplusGoldText.tint = 0x82780e;
   this.add(this.surplusGoldText);
 
@@ -25,8 +25,15 @@ var Beginning = function(game, state) {
   txt3.tint = 0x257a15;
   this.add(txt3);
 
-  this.freedomGoldText = this.game.add.bitmapText(180, 240, 'minecraftia_white', state.freedomGold + '.00', 25);
-  this.freedomGoldText.tint = 0x2fb914;
+  this.freedomGoldText = this.game.add.bitmapText(180, 240, 'minecraftia_white', window.formatNumber(state.freedomGold, 6), 20);
+  
+  if(state.freedomGold < 0){
+    this.freedomGoldText.tint = 0xFF0000;
+  }
+  else{
+    this.freedomGoldText.tint = 0x2fb914;
+  }
+
   this.add(this.freedomGoldText);
 };
 
@@ -34,6 +41,7 @@ Beginning.prototype = Object.create(Phaser.Group.prototype);
 Beginning.prototype.constructor = Beginning;
 
 Beginning.prototype.update = function() {
+
 };
 
 module.exports = Beginning;
