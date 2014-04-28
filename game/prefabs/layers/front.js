@@ -6,6 +6,8 @@ var LayerFront = function(game) {
   this.surfaceTop = 100;
   this.surfaceBot = 490;
 
+  this.add(this.game.add.image(0, 298, 'start', 'floor'));
+
   this.generateTop();
   this.generateBot();
 };

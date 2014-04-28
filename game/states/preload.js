@@ -18,6 +18,7 @@ Preload.prototype = {
     this.load.atlas('env', 'assets/env_tiles.png', 'assets/env_tiles.json');
     this.load.atlas('envFront', 'assets/env_tiles_front.png', 'assets/env_tiles_front.json');
     this.load.image('envBgs', 'assets/env_bg_tiles.png');
+    this.load.atlas('start', 'assets/start.png', 'assets/start.json');
 
     this.game.load.bitmapFont('minecraftia', 'assets/fonts/minecraftia.png', 'assets/fonts/minecraftia.xml');
 
