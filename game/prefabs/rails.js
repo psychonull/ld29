@@ -9,6 +9,7 @@ var Rails = function(game, map) {
   this.lastGenerated = 0;
   this.facing = 1;
   this.y = 270;
+  this.x = 350;
   
   this.lastViewX = -1;
   this.lastPos = { from:-1, to: -1};

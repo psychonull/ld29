@@ -7,7 +7,7 @@ var Cart = function(game, x, y, frame) {
 
   game.physics.arcade.enable(this);
 
-  this.currentVelocity = 700;
+  this.currentVelocity = 0;
   this.facing = 1;
   this.jumpOnCollide = 10;
 
@@ -114,7 +114,6 @@ Cart.prototype.checkCollisions = function(railsGroup){
       this.facing *= -1;
     }
     else {
-      console.log('Loose %s Money!', obstacle.data.loseFactor);
       this.collidedObstacle.dispatch(obstacle.data.loseFactor, obstacle);
       this.x += this.jumpOnCollide * this.facing;
     }
