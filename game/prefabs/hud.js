@@ -1,5 +1,6 @@
 'use strict';
-var Minimap = require('./minimap');
+var Minimap = require('./minimap'),
+  PlayerStateManager = require('../utils/playerStateManager');
 
 var Hud = function(game) {
   this._score = 0;
@@ -22,6 +23,8 @@ var Hud = function(game) {
   this.add(this.minimap);
 
   this.timerExpired = new Phaser.Signal();
+  this.playerLost = new Phaser.Signal();
+
   this.score(0);
 };
 
@@ -52,7 +55,12 @@ Hud.prototype.score = function(amountToAdd){
     else{
       this.scoreText.tint = 0xF2F201;
     }
-    this.scoreText.setText('$ ' + this._score);  
+    this.scoreText.setText('$ ' + this._score);
+
+    if (this._score < PlayerStateManager.LOSE_THRESHOLD){
+      this.playerLost.dispatch();
+    }
+    
   }
 };
 

@@ -16,6 +16,7 @@ function Play() {}
 Play.prototype = {
   create: function() {
     this.initPlayerState();
+    this.cartingStarted = false;
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     
     //  Resize our game world to be a 2000 x 800 square
@@ -42,10 +43,12 @@ Play.prototype = {
       this.cart.currentVelocity = 0;
       this.hud.startCowntdown(1*1000);
       this.hud.timer.visible = true;
-
+      this.ending.start();
+      
       this.hud.timerExpired.add(function(){
         this.game.add.tween(this.game.camera.deadzone).to({x: 500}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
         this.cart.currentVelocity = 750;
+        this.ending.end();
       }, this);
 
     }, this);
@@ -93,6 +96,9 @@ Play.prototype = {
     this.fpsText.fixedToCamera = true;
 
     this.hud = new Hud(this.game);
+    this.hud.playerLost.add(function(){
+      this.game.state.start('lose');
+    }, this);
     this.game.add.existing(this.hud);
 
     //  Stop the following keys from propagating up to the browser

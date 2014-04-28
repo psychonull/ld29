@@ -8,10 +8,11 @@ Menu.prototype = {
   },
   create: function() {
     this.game.stage.backgroundColor = '#61e1e9';
-    var style = { font: '65px Arial', fill: '#ffffff', align: 'center'};
     this.sprite = this.game.add.sprite(this.game.world.centerX, 138, 'cart');
     this.sprite.anchor.setTo(0.5, 0.5);
-
+    this.sprite.scale.x = 20;
+    this.sprite.scale.y = 20;
+    this.sprite.smoothed = false;
 
     this.playText = this.game.add.bitmapText(0, 300, 'minecraftia_white','PLAY', 46);
     this.playText.align = 'center';
