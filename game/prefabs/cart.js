@@ -43,6 +43,8 @@ var Cart = function(game, x, y, frame) {
   this.animations.add('empty', [0,1,2,3,4], true);
   this.animations.add('filled', [5,6,7,8,9]);
   this.animations.play('empty'); 
+
+  this.emitter = this.game.add.emitter(50, 50, 10);
 };
 
 Cart.prototype = Object.create(Phaser.Sprite.prototype);
@@ -67,6 +69,7 @@ Cart.prototype.update = function() {
 
   if (hasMove){
     this.nextMove = this.game.time.now + this.moveRate;
+    this.shootParticles('chips');
   }
 
   if (this.collided){
@@ -118,6 +121,30 @@ Cart.prototype.moveToRail = function(railIndex, noAminate){
   return false;
 };
 
+Cart.prototype.shootParticles = function(type){
+  switch(type){
+    case "chips":
+      this.emitter.x = this.x;
+      this.emitter.y = this.y;
+
+      this.emitter.makeParticles('chips', [0,1,2,3], 5, true, true);
+
+      var velX = this.currentVelocity * this.facing;
+      this.emitter.minParticleSpeed.setTo(velX * 0.5, -100);
+      this.emitter.maxParticleSpeed.setTo(velX * 1.5, -300);
+
+      this.emitter.minParticleScale = 0.2;
+      this.emitter.maxParticleScale = 0.5;
+      this.emitter.setAlpha(0.3, 0.8);
+      this.emitter.gravity = 500;
+      this.emitter.bounce.setTo(0.5, 0.5);
+      this.emitter.angularDrag = 30;
+
+      this.emitter.start(true, 8000, 0, 10);
+      break;
+  }
+};
+
 Cart.prototype.checkCollisions = function(railsGroup){
   //this.game.debug.body(this);
 
@@ -137,6 +164,7 @@ Cart.prototype.checkCollisions = function(railsGroup){
       this.collidedStartingPoint.dispatch();
     }
     else {
+      this.shootParticles('chips');
       this.collidedObstacle.dispatch(obstacle.data.loseFactor, obstacle);
       this.x += this.jumpOnCollide * this.facing;
     }

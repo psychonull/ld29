@@ -39,7 +39,7 @@ var Beginning = function(game, state) {
   this.add(savings);
   
   this.add(this.game.add.bitmapText(savingX + 12, savingY + 45, 'minecraftia', 'MY SAVINGS', 14));
-  this.add(this.game.add.bitmapText(savingX + 15, savingY + 65, 'minecraftia', window.formatNumber(state.freedomGold, 6), 20));
+  this.add(this.game.add.bitmapText(savingX + 15, savingY + 65, 'minecraftia', window.formatNumber(state.freedomGold, 6), 16));
 };
 
 Beginning.prototype = Object.create(Phaser.Group.prototype);
