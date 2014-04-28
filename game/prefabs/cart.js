@@ -23,6 +23,8 @@ var Cart = function(game, x, y, frame) {
   this.moveSize = 50;
 
   this.cursors = game.input.keyboard.createCursorKeys();
+  this.wKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
+  this.sKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
 
   this.game.physics.enable(this, Phaser.Physics.ARCADE);
   this.body.setSize(35, 30, 0, 10);
@@ -33,6 +35,7 @@ var Cart = function(game, x, y, frame) {
 
   this.collectedStuff = new Phaser.Signal();
   this.collidedObstacle = new Phaser.Signal();
+  this.collidedStartingPoint = new Phaser.Signal();
   this.collided = false;
 };
 
@@ -48,10 +51,10 @@ Cart.prototype.update = function() {
   var canMove = this.enabled && (this.game.time.now > this.nextMove);
   var hasMove = false;
 
-  if (this.cursors.up.isDown && canMove) {
+  if ((this.cursors.up.isDown || this.wKey.isDown) && canMove) {
     hasMove = this.moveToRail(this.currentRail - 1);
   }
-  else if (this.cursors.down.isDown && canMove) {
+  else if ((this.cursors.down.isDown || this.sKey.isDown) && canMove) {
     hasMove = this.moveToRail(this.currentRail + 1);
   }
 
@@ -110,8 +113,12 @@ Cart.prototype.checkCollisions = function(railsGroup){
 
   function collisionHandler(cart, obstacle){
     if(obstacle.data.type === 'win'){
-      this.collectedStuff.dispatch(this.game.rnd.integerInRange(10,1000));
       this.facing *= -1;
+      this.collectedStuff.dispatch(this.game.rnd.integerInRange(10,1000));
+    }
+    else if(obstacle.data.type === 'start'){
+      this.facing *= -1;
+      this.collidedStartingPoint.dispatch();
     }
     else {
       this.collidedObstacle.dispatch(obstacle.data.loseFactor, obstacle);
