@@ -1,40 +1,45 @@
+
+var PlayerStateManager = require('../utils/playerStateManager');
+
 'use strict';
 
 var Beginning = function(game, state) {
   Phaser.Group.call(this, game);
 
-  this.add(this.game.add.image(0, 300, 'start', 'company_assets'));
+  //company assets
+  var compAssets = this.game.add.image(0, 350, 'start', 'company_assets');
+  compAssets.scale.x = 0.75;
+  compAssets.scale.y = 0.75;
+  this.add(compAssets);
   
-  var txt1 = this.game.add.bitmapText(38, 317, 'minecraftia_white', 'COMPANY', 20);
-  txt1.tint = 0x756632;
-  this.add(txt1);
+  this.add(this.game.add.bitmapText(35, 365, 'minecraftia', 'COMPANY', 12));
+  this.add(this.game.add.bitmapText(40, 380, 'minecraftia', 'ASSETS', 12));
 
-  var txt2 = this.game.add.bitmapText(44, 340, 'minecraftia_white', 'ASSETS', 20);
-  txt2.tint = 0x756632;
-  this.add(txt2);
+  this.add(this.game.add.bitmapText(40, 440, 'minecraftia', window.formatNumber(state.surplusGold, 8), 16));
 
-  this.surplusGoldText = this.game.add.bitmapText(60, 420, 'minecraftia_white', window.formatNumber(state.surplusGold, 8), 20);
-  this.surplusGoldText.tint = 0x82780e;
-  this.add(this.surplusGoldText);
-
-  ///////////////////////////////////////////
-
-  this.add(this.game.add.image(160, 150, 'start', 'freedom_sight'));
+  //happiness on sale
+  var saleX = 95;
+  var saleY = 170;
+  var sales = this.game.add.image(saleX, saleY, 'start', 'freedom_sight');
+  sales.scale.x = 0.9;
+  sales.scale.y = 0.9;
+  this.add(sales);
   
-  var txt3 = this.game.add.bitmapText(180, 205, 'minecraftia_white', 'FREEDOM', 20);
-  txt3.tint = 0x257a15;
-  this.add(txt3);
+  this.add(this.game.add.bitmapText(saleX + 62, saleY + 22, 'minecraftia', 'HAPPINESS', 14));
+  this.add(this.game.add.bitmapText(saleX + 82, saleY + 42, 'minecraftia', 'ON SALE', 14));
+  this.add(this.game.add.bitmapText(saleX + 62, saleY + 65, 'minecraftia', 
+    window.formatNumber(PlayerStateManager.GOLD_REQUIRED_FOR_FREEDOM, 6), 20));
 
-  this.freedomGoldText = this.game.add.bitmapText(180, 240, 'minecraftia_white', window.formatNumber(state.freedomGold, 6), 20);
+  //my savings
+  var savingX = 350;
+  var savingY = 160;
+  var savings = this.game.add.image(savingX, savingY, 'start', 'savings_sight');
+  savings.scale.x = 0.9;
+  savings.scale.y = 0.75;
+  this.add(savings);
   
-  if(state.freedomGold < 0){
-    this.freedomGoldText.tint = 0xFF0000;
-  }
-  else{
-    this.freedomGoldText.tint = 0x2fb914;
-  }
-
-  this.add(this.freedomGoldText);
+  this.add(this.game.add.bitmapText(savingX + 12, savingY + 45, 'minecraftia', 'MY SAVINGS', 14));
+  this.add(this.game.add.bitmapText(savingX + 15, savingY + 65, 'minecraftia', window.formatNumber(state.freedomGold, 6), 20));
 };
 
 Beginning.prototype = Object.create(Phaser.Group.prototype);
