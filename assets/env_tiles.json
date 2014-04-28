@@ -26,5 +26,8 @@
   },{
     "filename": "stop_left",
     "frame": {"x":80,"y":160,"w":80,"h":80}
+  },{
+    "filename": "ground",
+    "frame": {"x":160,"y":160,"w":80,"h":80}
   }]
 }
