@@ -72,6 +72,8 @@ Cart.prototype.update = function() {
 
 };
 
+Cart.VELOCITY_REDUCTION_ON_RAIL_MOVEMENT = 0.9;
+
 Cart.prototype.moveToRail = function(railIndex, noAminate){  
   var nextRail = this.rails.children[railIndex];
   if(nextRail){
@@ -83,12 +85,13 @@ Cart.prototype.moveToRail = function(railIndex, noAminate){
     else {
       var nextY = nextRail.getCartY();
 
-      var duration = 100;
-      
+      var duration = 40;
+      this.body.velocity.x = this.body.velocity.x * Cart.VELOCITY_REDUCTION_ON_RAIL_MOVEMENT;
       this.game.add.tween(this)
         .to({y: nextY}, duration*3, Phaser.Easing.Quadratic.OutIn, true, 0, false)
         .onComplete.add(function(){
           this.currentRail = railIndex;
+          this.body.velocity.x = this.body.velocity.x * (1/Cart.VELOCITY_REDUCTION_ON_RAIL_MOVEMENT);
         }, this);
 
       this.game.add.tween(this).to({angle: 20 * this.facing * -1}, duration, Phaser.Easing.Quadratic.InOut, true, 0, false);
