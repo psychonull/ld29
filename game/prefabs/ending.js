@@ -26,6 +26,7 @@ var Ending = function(game) {
   this.add(this.collectText);
   this.collectText.start();
   this.coinPickupSound = this.game.add.audio('coinPickup');
+  this.coinPickupSound.volume = 0.3;
 };
 
 Ending.prototype = Object.create(Phaser.Group.prototype);

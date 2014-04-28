@@ -35,6 +35,9 @@ Preload.prototype = {
     this.game.load.audio('playSfx', 'assets/sounds/mainMenuPlay.wav');
     this.game.load.audio('bgm', 'assets/sounds/ld29bgm.mp3');
     this.game.load.audio('coinPickup', 'assets/sounds/coinPickup.wav');
+    this.game.load.audio('collide', 'assets/sounds/Collide.wav');
+    this.game.load.audio('collide_short', 'assets/sounds/Collide short.wav');
+    this.game.load.audio('collide_starting', 'assets/sounds/Starting.wav');
 
     window.formatNumber = function(nbo, zeros){
       function pad (str, max) {

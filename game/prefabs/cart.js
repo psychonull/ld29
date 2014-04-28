@@ -42,7 +42,15 @@ var Cart = function(game, x, y, frame) {
 
   this.animations.add('empty', [0,1,2,3,4], true);
   this.animations.add('filled', [5,6,7,8,9]);
-  this.animations.play('empty'); 
+  this.animations.play('empty');
+
+  this.collideSound = this.game.add.audio('collide');
+  this.collideSound.volume = 0.3;
+  this.collideShortSound = this.game.add.audio('collide_short');
+  this.collideShortSound.volume = 0.3;
+  this.collideStartingSound = this.game.add.audio('collide_starting');
+  this.collideStartingSound.volume = 0.3;
+
 };
 
 Cart.prototype = Object.create(Phaser.Sprite.prototype);
@@ -134,10 +142,17 @@ Cart.prototype.checkCollisions = function(railsGroup){
       this.collectedStuff.dispatch(this.game.rnd.integerInRange(10,1000));
     }
     else if(obstacle.data.type === 'start'){
+      this.collideStartingSound.play();
       this.facing = 1;
       this.collidedStartingPoint.dispatch();
     }
     else {
+      if(this.game.rnd.integerInRange(1,2) === 1){
+        this.collideSound.play();
+      }
+      else {
+        this.collideShortSound.play();
+      }
       this.collidedObstacle.dispatch(obstacle.data.loseFactor, obstacle);
       this.x += this.jumpOnCollide * this.facing;
     }
