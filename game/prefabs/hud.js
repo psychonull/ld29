@@ -9,7 +9,7 @@ var Hud = function(game) {
   this.y = 535;
   this.fixedToCamera = true;
 
-  this.scoreText = this.game.add.bitmapText(10, 0, 'minecraftia_white','', 30);
+  this.scoreText = this.game.add.bitmapText(10, 0, 'minecraftia_white', window.formatNumber(0, 6), 30);
   this.add(this.scoreText);
 
   this.timer = this.game.add.bitmapText(0, 0, 'minecraftia','30.00', 22);
@@ -49,13 +49,13 @@ Hud.prototype.score = function(amountToAdd){
     else if (amountToAdd < 0){
       this.runScoreDownAnimation(amountToAdd);
     }
-    if(this._score <= 0){
+    if(this._score < 0){
       this.scoreText.tint = 0xFF0000;
     }
     else{
       this.scoreText.tint = 0xF2F201;
     }
-    this.scoreText.setText('$ ' + this._score);
+    this.scoreText.setText('$ ' + window.formatNumber(this._score, 6));
 
     if (this._score < PlayerStateManager.LOSE_THRESHOLD){
       this.playerLost.dispatch();

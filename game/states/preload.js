@@ -33,6 +33,24 @@ Preload.prototype = {
     this.game.load.bitmapFont('minecraftia_white', 'assets/fonts/minecraftia_white.png', 'assets/fonts/minecraftia_white.xml');
 
     this.game.load.audio('playSfx', 'assets/sounds/mainMenuPlay.wav');
+
+    window.formatNumber = function(nbo, zeros){
+      function pad (str, max) {
+        str = str.toString();
+        return str.length < max ? pad("0" + str, max) : str;
+      }
+
+      function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+
+      var attach = "";
+      if (nbo < 0){
+        nbo *= -1;
+        attach = "-";
+      }
+      return attach + numberWithCommas(pad(nbo, zeros || 6));
+    };
   },
   create: function() {
     this.asset.cropEnabled = false;
