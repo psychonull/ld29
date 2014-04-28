@@ -20,5 +20,11 @@
   },{
     "filename": "plant",
     "frame": {"x":160,"y":80,"w":80,"h":80}
+  },{
+    "filename": "stop_right",
+    "frame": {"x":0,"y":160,"w":80,"h":80}
+  },{
+    "filename": "stop_left",
+    "frame": {"x":80,"y":160,"w":80,"h":80}
   }]
 }
