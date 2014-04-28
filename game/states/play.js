@@ -104,6 +104,10 @@ Play.prototype = {
       this.fpsText.setText(this.game.time.fps + ' FPS' + " /// " + this.game.camera.x);
     }
 
+    if (this.cart.currentVelocity !== 0){
+      this.hud.updateMinimap(this.cart, this.rails);
+    }
+
     this.cart.checkCollisions(this.rails);
   },
   startCarting: function(){

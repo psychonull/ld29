@@ -1,4 +1,5 @@
 'use strict';
+var Minimap = require('./minimap');
 
 var Hud = function(game) {
   this._score = 0;
@@ -7,13 +8,18 @@ var Hud = function(game) {
   this.y = 535;
   this.fixedToCamera = true;
 
-  this.scoreText = this.game.add.bitmapText(0, 0, 'minecraftia_white','', 30);
+  this.scoreText = this.game.add.bitmapText(10, 0, 'minecraftia_white','', 30);
   this.add(this.scoreText);
 
   this.timer = this.game.add.bitmapText(0, 0, 'minecraftia','30.00', 22);
   this.timer.x = this.game.width * 0.9 - this.timer.textWidth / 2;
   this.timer.visible = false;
   this.add(this.timer);
+
+  this.minimap = new Minimap(this.game);
+  this.minimap.x = this.game.width * 0.35;
+  this.minimap.y = 7;
+  this.add(this.minimap);
 
   this.timerExpired = new Phaser.Signal();
   this.score(100);
@@ -83,6 +89,10 @@ Hud.prototype.updateTimer = function(){
 
   this.timer.setText(seconds + '.' + milliseconds);
  
+};
+
+Hud.prototype.updateMinimap = function(cart, rails){
+  this.minimap.updateProgress(cart, rails);
 };
 
 module.exports = Hud;

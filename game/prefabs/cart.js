@@ -55,7 +55,7 @@ Cart.prototype.init = function(rails){
 Cart.prototype.update = function() {
   this.body.velocity.x = this.currentVelocity * this.facing;
   
-  var canMove = this.enabled && (this.game.time.now > this.nextMove);
+  var canMove = this.enabled && (this.game.time.now > this.nextMove) && this.currentVelocity !== 0;
   var hasMove = false;
 
   if ((this.cursors.up.isDown || this.wKey.isDown) && canMove) {
