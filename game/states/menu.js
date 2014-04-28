@@ -19,7 +19,8 @@ Menu.prototype = {
     this.playText.x = this.game.width / 2 - this.playText.textWidth / 2;
     this.playText.y = this.game.height / 2 - this.playText.textHeight / 2;
     
-    this.instructionsText = this.game.add.bitmapText(270, 365, 'minecraftia', 'Click to begin. Use Up/Down Arrows to move', 16);
+    this.instructionsText = this.game.add.bitmapText(270, 365, 'minecraftia', 'Click to begin. \n Use W/S or Up/Down to move. Click or Space to collect', 16);
+    this.instructionsText.align = 'center';
     this.instructionsText.x = this.game.width / 2 - this.instructionsText.textWidth / 2;
 
     this.sprite.angle = -20;
