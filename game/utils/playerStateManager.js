@@ -49,7 +49,7 @@ PlayerStateManager.prototype = {
   }
 };
 
-PlayerStateManager.LOSE_THRESHOLD = -100;
+PlayerStateManager.LOSE_THRESHOLD = -10000;
 PlayerStateManager.GOLD_REQUIRED_FOR_FREEDOM = 100000;
 
 module.exports = PlayerStateManager;
