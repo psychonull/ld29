@@ -1,4 +1,5 @@
 'use strict';
+var BlinkingText = require('./blinkingText');
 
 var Ending = function(game) {
   this._running = false;
@@ -17,7 +18,13 @@ var Ending = function(game) {
   this.add(this.goldEmitter);
 
   this.space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-  this.space_key.onDown.add(this.clickGold, this); 
+  this.space_key.onDown.add(this.clickGold, this);
+
+  this.collectText = new BlinkingText(this.game, 'COLLECT');
+  this.collectText.x = 200;
+  this.collectText.y = 20;
+  this.add(this.collectText);
+  this.collectText.start();
 };
 
 Ending.prototype = Object.create(Phaser.Group.prototype);
