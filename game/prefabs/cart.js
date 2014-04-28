@@ -11,7 +11,7 @@ var Cart = function(game, x, y, frame) {
   this.facing = 1;
   this.jumpOnCollide = 10;
 
-  this.body.velocity.x = this.currentVelocity * this.facing;
+  this.body.velocity.x = 0;
   this.body.velocity.y = 0;
   this.anchor.setTo(0.5, 0.5);
 
@@ -47,6 +47,7 @@ Cart.prototype.init = function(rails){
 }
 
 Cart.prototype.update = function() {
+  this.body.velocity.x = this.currentVelocity * this.facing;
   
   var canMove = this.enabled && (this.game.time.now > this.nextMove);
   var hasMove = false;
@@ -116,11 +117,11 @@ Cart.prototype.checkCollisions = function(railsGroup){
 
   function collisionHandler(cart, obstacle){
     if(obstacle.data.type === 'win'){
-      this.facing *= -1;
+      this.facing = -1;
       this.collectedStuff.dispatch(this.game.rnd.integerInRange(10,1000));
     }
     else if(obstacle.data.type === 'start'){
-      this.facing *= -1;
+      this.facing = 1;
       this.collidedStartingPoint.dispatch();
     }
     else {
@@ -128,9 +129,8 @@ Cart.prototype.checkCollisions = function(railsGroup){
       this.x += this.jumpOnCollide * this.facing;
     }
     
-    this.body.velocity.x = this.currentVelocity * this.facing;
     this.collided = true;
   }
-}
+};
 
 module.exports = Cart;
