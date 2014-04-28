@@ -57,6 +57,10 @@ Play.prototype = {
     this.fpsText.fixedToCamera = true;
 
     this.hud = new Hud(this.game);
+    //this.hud.startCowntdown(5*1000);
+    //this.hud.timerExpired.add(function(){
+    //  alert('holy shit');
+    //})
     this.game.add.existing(this.hud);
     
   },
