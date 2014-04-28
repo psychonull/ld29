@@ -36,7 +36,6 @@ Play.prototype = {
     this.cart.rails = this.rails;
 
     this.cart.collectedStuff.add(function(amt){
-      this.hud.score(amt);
       this.rails.setFacing(-1);
       
       this.cart.currentVelocity = 0;
@@ -46,14 +45,13 @@ Play.prototype = {
       this.hud.timerExpired.add(function(){
         this.game.add.tween(this.game.camera.deadzone).to({x: 500}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
         this.cart.currentVelocity = 750;
-
-        this.cart.gold = 1;
       }, this);
 
     }, this);
 
     this.cart.collidedObstacle.add(function(amt){
       this.hud.score(amt * this.game.rnd.integerInRange(-50, -5));
+      this.cart.gold = this.hud.score();
     }, this);
 
     this.cart.init();
@@ -63,7 +61,6 @@ Play.prototype = {
       this.game.camera.follow(null);
       this.cart.currentVelocity = 0;
       this.cartingStarted = false;
-
       this.cart.gold = 0;
     }, this);
     
@@ -76,6 +73,11 @@ Play.prototype = {
     this.ending = new Ending(this.game);
     this.game.add.existing(this.ending);
     this.ending.x = this.rails.x + this.rails.getEstimatedWidth();
+
+    this.ending.goldClick.add(function(){
+      this.cart.gold += 5; //Gold to sum for each click
+      this.hud.score(this.cart.gold);
+    }, this);
 
     // Show FPS
     this.game.time.advancedTiming = true;
@@ -97,6 +99,25 @@ Play.prototype = {
     };
 
     this.game.stage.backgroundColor = "#000";
+
+
+/*
+    //emitter = game.add.emitter(game.world.centerX, game.world.centerY, 250);
+    var goldEmitter = this.game.add.emitter(200, 200, 10);
+    //var add(var goldEmitter);
+
+    goldEmitter.makeParticles('gold', [0,1,2,3], 3, true, true);
+
+    goldEmitter.minParticleSpeed.setTo(-200, -300);
+    goldEmitter.maxParticleSpeed.setTo(200, -400);
+    goldEmitter.minParticleScale = 0.5;
+    goldEmitter.maxParticleScale = 2;
+    goldEmitter.gravity = 150;
+    goldEmitter.bounce.setTo(0.5, 0.5);
+    goldEmitter.angularDrag = 30;
+
+    goldEmitter.start(false, 8000, 400, 50);
+*/
   },
   update: function() {
     // Show FPS

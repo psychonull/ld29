@@ -14,6 +14,7 @@ Preload.prototype = {
     this.load.setPreloadSprite(this.asset);
     
     this.load.spritesheet('cart', 'assets/cart.png', 80, 80, 10);  
+    this.load.spritesheet('gold', 'assets/gold.png', 64, 64, 4);
 
     this.load.atlas('env', 'assets/env_tiles.png', 'assets/env_tiles.json');
     this.load.atlas('envFront', 'assets/env_tiles_front.png', 'assets/env_tiles_front.json');
