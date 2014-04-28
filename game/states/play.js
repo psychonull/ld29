@@ -5,7 +5,8 @@ var Cart = require('../prefabs/cart'),
     RailsMapGenerator = require('../utils/railsMapGenerator'),
     LayerBack = require('../prefabs/layers/back'),
     LayerFront = require('../prefabs/layers/front'),
-    LayerGame = require('../prefabs/layers/game');
+    LayerGame = require('../prefabs/layers/game'),
+    Hud = require('../prefabs/hud');
 
 function Play() {}
 
@@ -32,10 +33,13 @@ Play.prototype = {
     this.cart = new Cart(this.game, 100, 0, this.rails);
     this.cart.rails = this.rails;
     this.cart.collectedStuff.add(function(amt){
-      this.scoreText.setText('Collected ' + amt);
+      this.hud.score(amt);
       this.rails.setFacing(-1);
       this.game.add.tween(this.game.camera.deadzone).to({x: 500}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
-      //this.game.camera.deadzone = new Phaser.Rectangle(750, 150, 10, 10);
+    }, this);
+
+    this.cart.collidedObstacle.add(function(amt){
+      this.hud.score(amt * this.game.rnd.integerInRange(-50, -5));
     }, this);
     this.cart.init();
     
@@ -52,8 +56,13 @@ Play.prototype = {
     );
     this.fpsText.fixedToCamera = true;
 
-    this.scoreText = this.game.add.bitmapText(0, 540, 'minecraftia','$ 10.000', 22);
-    this.scoreText.fixedToCamera = true;
+    this.hud = new Hud(this.game);
+    //this.hud.startCowntdown(5*1000);
+    //this.hud.timerExpired.add(function(){
+    //  alert('holy shit');
+    //})
+    this.game.add.existing(this.hud);
+    
   },
   update: function() {
     // Show FPS
