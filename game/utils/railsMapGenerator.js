@@ -9,8 +9,10 @@ var RailsMapGenerator = {
 	difficulty: 3,
 	startingOffset: 6,
 
-	generate: function(width){
+	generate: function(state){
 		var obstacles = ObstacleTypes.getAvailableIds();
+		var width = 25 * (state.gamesPlayed);
+		console.log(width);
 		var map = [[],[],[],[]];
 		for (var i = 0; i < map.length; i++){
 			map[i].push(ObstacleTypes.START_ID);
@@ -28,7 +30,6 @@ var RailsMapGenerator = {
 			array.push(0);
 		}
 	}
-
 
 };
 
