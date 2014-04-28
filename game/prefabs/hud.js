@@ -7,7 +7,7 @@ var Hud = function(game) {
   this.y = 535;
   this.fixedToCamera = true;
 
-  this.scoreText = this.game.add.bitmapText(0, 0, 'minecraftia_gold','$ 10.000', 30);
+  this.scoreText = this.game.add.bitmapText(0, 0, 'minecraftia_white','', 30);
   this.add(this.scoreText);
 
   this.timer = this.game.add.bitmapText(0, 0, 'minecraftia','30.00', 22);
@@ -16,7 +16,7 @@ var Hud = function(game) {
   this.add(this.timer);
 
   this.timerExpired = new Phaser.Signal();
-  this.score(1000);
+  this.score(100);
 };
 
 Hud.prototype = Object.create(Phaser.Group.prototype);
@@ -39,6 +39,12 @@ Hud.prototype.score = function(amountToAdd){
     }
     else if (amountToAdd < 0){
       this.runScoreDownAnimation(amountToAdd);
+    }
+    if(this._score <= 0){
+      this.scoreText.tint = 0xFF0000;
+    }
+    else{
+      this.scoreText.tint = 0xF2F201;
     }
     this.scoreText.setText('$ ' + this._score);  
   }

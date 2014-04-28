@@ -22,9 +22,6 @@ Preload.prototype = {
 
     this.game.load.bitmapFont('minecraftia', 'assets/fonts/minecraftia.png', 'assets/fonts/minecraftia.xml');
     this.game.load.bitmapFont('minecraftia_white', 'assets/fonts/minecraftia_white.png', 'assets/fonts/minecraftia_white.xml');
-    this.game.load.bitmapFont('minecraftia_gold', 'assets/fonts/minecraftia_gold.png', 'assets/fonts/minecraftia_gold.xml');
-    this.game.load.bitmapFont('minecraftia_red', 'assets/fonts/minecraftia_red.png', 'assets/fonts/minecraftia_red.xml');
-    this.game.load.bitmapFont('minecraftia_green', 'assets/fonts/minecraftia_green.png', 'assets/fonts/minecraftia_green.xml');
 
     this.game.load.audio('playSfx', 'assets/sounds/mainMenuPlay.wav');
   },
