@@ -16,6 +16,7 @@ function Play() {}
 Play.prototype = {
   create: function() {
     this.initPlayerState();
+    this.cartingStarted = false;
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     
     //  Resize our game world to be a 2000 x 800 square
