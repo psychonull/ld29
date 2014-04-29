@@ -2,7 +2,7 @@ ObstacleTypes = {
 	"1" : {
 		res: "cart",
 		type: "lose",
-		loseFactor: 3
+		loseFactor: 2
 	},
 	"2" : {
 		res: "env",

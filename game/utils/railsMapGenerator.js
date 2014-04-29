@@ -31,12 +31,26 @@ var RailsMapGenerator = {
 	},
 
 	getDifficulty: function(state){
+		var dif = 1;
 		var BASE_DIFICULTY = 3;
-		return BASE_DIFICULTY + Math.round(state.gamesPlayed / 3)
+		if (state.gamesPlayed < 5){
+			dif = BASE_DIFICULTY + Math.round(state.gamesPlayed) + 2;
+		}
+		else if(state.gamesPlayed >= 5 && state.gamesPlayed < 10){
+	      	dif = BASE_DIFICULTY + Math.round(state.gamesPlayed) - 1;
+	    }
+	    else if(state.gamesPlayed >= 10 && state.gamesPlayed < 15){
+	      dif =  7
+	    }
+	    else {
+	    	dif = 10;
+	    }
+	    return Math.min(dif, 15);
+		//return BASE_DIFICULTY + Math.round(state.gamesPlayed / 3)
 	},
 
 	getLength: function(state){
-		return 25 * (state.gamesPlayed);
+		return state.getMapLength();
 	}
 
 };

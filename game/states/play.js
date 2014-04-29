@@ -41,7 +41,7 @@ Play.prototype = {
       this.rails.setFacing(-1);
       
       this.cart.currentVelocity = 0;
-      this.hud.startCowntdown(1*1000);
+      this.hud.startCowntdown(this.game.playerState.getCollectTime());
       this.hud.timer.visible = true;
       this.ending.start();
       
@@ -50,12 +50,13 @@ Play.prototype = {
         this.game.add.tween(this.game.camera.deadzone).to({x: 750}, 1000, Phaser.Easing.Linear.NONE, true, 0, 0, false);
         this.cart.currentVelocity = this.game.playerState.getCartSpeed();
         this.ending.end();
+        this.hud.timer.visible = false;
       }, this);
 
     }, this);
 
     this.cart.collidedObstacle.add(function(amt){
-      var lostGold = amt * this.game.rnd.integerInRange(-50, -5);
+      var lostGold = amt * this.game.playerState.getRandomBaseGoldAMountToDrop();
       this.hud.score(lostGold);
       this.cart.gold = this.hud.score();
       this.cart.animateText(lostGold);
